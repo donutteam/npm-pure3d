@@ -24,7 +24,7 @@ export class ChunkRegistry
 
 	getClass(chunkType : number) : typeof Chunk
 	{
-		return this.chunkClasses[chunkType] || Chunk;
+		return this.chunkClasses[chunkType] ?? Chunk;
 	}
 
 	register(chunkType : number, chunkClass : typeof Chunk)

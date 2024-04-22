@@ -1,7 +1,6 @@
 //
-// CONSTANTS
+// Constants
 //
-
 
 export const ANIM = 0X3F0000C;
 

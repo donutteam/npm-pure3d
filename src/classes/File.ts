@@ -198,7 +198,7 @@ export class File
 
 		binaryWriter.writeUInt32(12);
 
-		const childrenSize = options.chunks.reduce((size, chunk) => size + chunk.getSize(), 0);
+		const childrenSize = options.chunks.reduce((size, chunk) => size + chunk.getEntireSize(), 0);
 
 		binaryWriter.writeUInt32(12 + childrenSize);
 

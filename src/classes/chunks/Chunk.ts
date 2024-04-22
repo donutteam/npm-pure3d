@@ -56,7 +56,7 @@ export class Chunk
 
 	getChildrenSize() : number
 	{
-		return this.children.reduce((size, child) => size + child.getSize(), 0);
+		return this.children.reduce((size, child) => size + child.getEntireSize(), 0);
 	}
 
 	getDataSize() : number
@@ -64,7 +64,7 @@ export class Chunk
 		return this.data?.byteLength ?? 0;
 	}
 
-	getSize() : number
+	getEntireSize() : number
 	{
 		return 12 + this.getDataSize() + this.getChildrenSize();
 	}
@@ -77,7 +77,7 @@ export class Chunk
 
 		binaryWriter.writeUInt32(dataSize);
 
-		const entireSize = this.getSize();
+		const entireSize = this.getEntireSize();
 
 		binaryWriter.writeUInt32(entireSize);
 

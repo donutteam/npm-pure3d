@@ -2,7 +2,7 @@
 // Imports
 //
 
-import { BinaryReader } from "@donutteam/binary-rw";
+import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
 
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
@@ -102,5 +102,31 @@ export class ImageChunk extends Chunk
 		this.hasAlpha = options.hasAlpha;
 
 		this.format = options.format;
+	}
+
+	override getDataSize() : number
+	{
+		return 1 + this.name.length + (4 * 7);
+	}
+
+	override writeData(binaryWriter : BinaryWriter) : void
+	{
+		binaryWriter.writeUInt8(this.name.length);
+
+		binaryWriter.writeString(this.name);
+
+		binaryWriter.writeUInt32(this.version);
+
+		binaryWriter.writeUInt32(this.width);
+
+		binaryWriter.writeUInt32(this.height);
+
+		binaryWriter.writeUInt32(this.bitsPerPixel);
+
+		binaryWriter.writeUInt32(this.palettised);
+
+		binaryWriter.writeUInt32(this.hasAlpha);
+
+		binaryWriter.writeUInt32(this.format);
 	}
 }

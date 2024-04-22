@@ -1,0 +1,9 @@
+{
+	"extends": "@donutteam/typescript-config",
+	"compilerOptions": {
+		"rootDir": "./src",
+		"outDir": "./build",
+
+		"verbatimModuleSyntax": false
+	}
+}

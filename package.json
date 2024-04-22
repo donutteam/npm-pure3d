@@ -6,13 +6,17 @@
 	"main": "./build/index.js",
 	"scripts": {
 		"build": "npx rimraf build && npx tsc",
-		"build:watch": "npx rimraf build && npx tsc --watch"
+		"build:watch": "npx rimraf build && npx tsc --watch",
+		"prepublishOnly": "npm run build"
 	},
 	"keywords": [
 		"pure3d"
 	],
 	"author": "Donut Team",
 	"license": "MIT",
+	"peerDependencies": {
+		"@donutteam/binary-rw": "^1.1.0"
+	},
 	"devDependencies": {
 		"@donutteam/typescript-config": "^1.0.0",
 		"@types/node": "^20.12.7",

@@ -2,9 +2,11 @@
 // Imports
 //
 
+import { BinaryReader } from "@donutteam/binary-rw";
+
 import { Chunk, ChunkOptions } from "./Chunk.js";
 
-import { BinaryReader } from "../BinaryReader.js";
+import * as ChunkLib from "../../libs/chunk.js";
 
 //
 // Class
@@ -41,13 +43,13 @@ export class TextureChunk extends Chunk
 			throw new Error("Missing data.");
 		}
 
-		const binaryReader = new BinaryReader(
-			{
-				arrayBuffer: this.data,
-				isLittleEndian: this.isLittleEndian,
-			});
+		const binaryReader = new BinaryReader(this.data, this.isLittleEndian);
 
-		this.name = binaryReader.readLengthPrefixedString();
+		const nameLength = binaryReader.readUInt8();
+
+		const name = binaryReader.readString(nameLength);
+
+		this.name = ChunkLib.cleanP3DString(name);
 
 		this.version = binaryReader.readUInt32();
 

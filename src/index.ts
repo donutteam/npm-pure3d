@@ -5,7 +5,6 @@
 export * from "./classes/chunks/Chunk.js";
 export * from "./classes/chunks/TextureChunk.js";
 
-export * from "./classes/BinaryReader.js";
 export * from "./classes/ChunkRegistry.js";
 
 export * from "./instances/default-chunk-registry.js";

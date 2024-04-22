@@ -2,6 +2,8 @@
 // Imports
 //
 
+import { BinaryReader } from "@donutteam/binary-rw";
+
 import { Chunk } from "../classes/chunks/Chunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
@@ -10,7 +12,6 @@ import { defaultChunkRegistry } from "../instances/default-chunk-registry.js";
 
 import * as ChunkLib from "./chunk.js";
 import * as FileSignatureLib from "./file-signature.js";
-import { BinaryReader } from "../classes/BinaryReader.js";
 
 //
 // Functions
@@ -32,11 +33,7 @@ export interface ReadFileResult
 
 export function readFile(options : ReadFileOptions) : ReadFileResult
 {
-	const binaryReader = new BinaryReader(
-		{
-			arrayBuffer: options.arrayBuffer,
-			isLittleEndian: true,
-		});
+	const binaryReader = new BinaryReader(options.arrayBuffer, true);
 
 	const fileIdentifier = binaryReader.readUInt32();
 

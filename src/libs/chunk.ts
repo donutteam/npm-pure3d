@@ -2,14 +2,27 @@
 // Imports
 //
 
+import { BinaryReader } from "@donutteam/binary-rw";
+
 import { Chunk } from "../classes/chunks/Chunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
-import { BinaryReader } from "../classes/BinaryReader.js";
 
 //
 // Functions
 //
+
+export function cleanP3DString(inputString : string) : string
+{
+	const nullIndex = inputString.indexOf("\0");
+
+	if (nullIndex == -1)
+	{
+		return inputString;
+	}
+
+	return inputString.substring(0, nullIndex);
+}
 
 export interface ReadChunkOptions
 {
@@ -26,12 +39,9 @@ export function readChunk(options : ReadChunkOptions) : Chunk
 {
 	const offset = options.offset ?? 0;
 
-	const binaryReader = new BinaryReader(
-		{
-			arrayBuffer: options.arrayBuffer,
-			isLittleEndian: options.isLittleEndian,
-			offset,
-		});
+	const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+
+	binaryReader.seek(offset);
 
 	let chunkType = binaryReader.readUInt32();
 

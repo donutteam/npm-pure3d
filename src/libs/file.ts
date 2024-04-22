@@ -44,7 +44,7 @@ export function readFile(options : ReadFileOptions) : ReadFileResult
 	{
 		case FileSignatureLib.BIG_ENDIAN:
 		{
-			const { chunk: rootChunk } = ChunkLib.readChunk(
+			const rootChunk = ChunkLib.readChunk(
 				{
 					isLittleEndian: false,
 					arrayBuffer: options.arrayBuffer,
@@ -65,7 +65,7 @@ export function readFile(options : ReadFileOptions) : ReadFileResult
 
 		case FileSignatureLib.LITTLE_ENDIAN:
 		{
-			const { chunk: rootChunk } = ChunkLib.readChunk(
+			const rootChunk = ChunkLib.readChunk(
 				{
 					isLittleEndian: true,
 					arrayBuffer: options.arrayBuffer,

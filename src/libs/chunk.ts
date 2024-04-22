@@ -22,12 +22,7 @@ export interface ReadChunkOptions
 	offset? : number;
 }
 
-export interface ReadChunkResult
-{
-	chunk : Chunk;
-}
-
-export function readChunk(options : ReadChunkOptions) : ReadChunkResult
+export function readChunk(options : ReadChunkOptions) : Chunk
 {
 	const offset = options.offset ?? 0;
 
@@ -63,19 +58,17 @@ export function readChunk(options : ReadChunkOptions) : ReadChunkResult
 	{
 		const childrenDataSize = entireSize - dataSize;
 
-		const { chunks } = readChunks(
+		children = readChunks(
 			{
 				arrayBuffer: options.arrayBuffer.slice(dataOffset, dataOffset + childrenDataSize),
 				chunkRegistry: options.chunkRegistry,
 				isLittleEndian: options.isLittleEndian,
 			});
-
-		children = chunks;
 	}
 
 	const chunkClass = options.chunkRegistry.getClass(chunkType);
 
-	const chunk = new chunkClass(
+	return new chunkClass(
 		{
 			isLittleEndian: options.isLittleEndian,
 			chunkType,
@@ -84,27 +77,18 @@ export function readChunk(options : ReadChunkOptions) : ReadChunkResult
 			data,
 			children,
 		});
-
-	return {
-		chunk,
-	};
 }
 
 export interface ReadChunksOptions
 {
-	buffer : Buffer;
+	arrayBuffer : ArrayBuffer;
 
 	chunkRegistry : ChunkRegistry;
 
 	isLittleEndian : boolean;
 }
 
-export interface ReadChunksResult
-{
-	chunks : Chunk[],
-}
-
-export function readChunks(options : ReadChunkOptions) : ReadChunksResult
+export function readChunks(options : ReadChunksOptions) : Chunk[]
 {
 	const chunks : Chunk[] = [];
 
@@ -112,7 +96,7 @@ export function readChunks(options : ReadChunkOptions) : ReadChunksResult
 
 	while (offset < options.arrayBuffer.byteLength)
 	{
-		const { chunk } = readChunk(
+		const chunk = readChunk(
 			{
 				arrayBuffer: options.arrayBuffer,
 				chunkRegistry: options.chunkRegistry,
@@ -125,7 +109,5 @@ export function readChunks(options : ReadChunkOptions) : ReadChunksResult
 		offset += chunk.entireSize;
 	}
 
-	return {
-		chunks,
-	};
+	return chunks;
 }

@@ -24,6 +24,8 @@ export class TextureChunk extends Chunk
 
 	alphaDepth : number;
 
+	numberOfMipMaps : number;
+
 	textureType : number;
 
 	usage : number;
@@ -57,10 +59,18 @@ export class TextureChunk extends Chunk
 
 		this.alphaDepth = binaryReader.readUInt32();
 
+		this.numberOfMipMaps = binaryReader.readUInt32();
+
 		this.textureType = binaryReader.readUInt32();
 
 		this.usage = binaryReader.readUInt32();
 
 		this.priority = binaryReader.readUInt32();
+
+		console.log(binaryReader.position, this.data.byteLength);
+
+		console.log(this);
+
+		console.log(this.data.slice(binaryReader.position));
 	}
 }

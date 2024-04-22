@@ -6,7 +6,7 @@ import { BinaryReader } from "@donutteam/binary-rw";
 
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
-import * as ChunkLib from "../../libs/miscellaneous.js";
+import { cleanP3DString } from "../../libs/miscellaneous.js";
 
 //
 // Class
@@ -43,7 +43,7 @@ export class TextureChunk extends Chunk
 
 		const nameLength = binaryReader.readUInt8();
 
-		const name = ChunkLib.cleanP3DString(binaryReader.readString(nameLength));
+		const name = cleanP3DString(binaryReader.readString(nameLength));
 
 		const version = binaryReader.readUInt32();
 

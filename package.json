@@ -1,12 +1,24 @@
 {
 	"type": "module",
-	"dependencies": {
+	"name": "@donutteam/pure3d",
+	"description": "This is a TypeScript library designed to read Pure3D files from video games created by Radical Entertainment.",
+	"version": "1.0.0",
+	"main": "./build/index.js",
+	"scripts": {
+		"build": "npx rimraf build && npx tsc",
+		"build:watch": "npx rimraf build && npx tsc --watch"
+	},
+	"keywords": [
+		"pure3d"
+	],
+	"author": "Donut Team",
+	"license": "MIT",
+	"devDependencies": {
 		"@donutteam/typescript-config": "^1.0.0",
 		"@types/node": "^20.12.7",
-		"typescript": "^5.4.5"
-	},
-	"devDependencies": {
 		"@types/source-map-support": "^0.5.10",
-		"source-map-support": "^0.5.21"
+		"rimraf": "^5.0.5",
+		"source-map-support": "^0.5.21",
+		"typescript": "^5.4.5"
 	}
 }

@@ -66,11 +66,5 @@ export class TextureChunk extends Chunk
 		this.usage = binaryReader.readUInt32();
 
 		this.priority = binaryReader.readUInt32();
-
-		console.log(binaryReader.position, this.data.byteLength);
-
-		console.log(this);
-
-		console.log(this.data.slice(binaryReader.position));
 	}
 }

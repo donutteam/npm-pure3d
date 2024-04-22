@@ -2,7 +2,7 @@
 // Imports
 //
 
-import { BinaryReader } from "@donutteam/binary-rw";
+import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
 
 import { Chunk } from "./chunks/Chunk.js";
 
@@ -10,7 +10,7 @@ import { ChunkRegistry } from "./ChunkRegistry.js";
 
 import { defaultChunkRegistry } from "../instances/default-chunk-registry.js";
 
-import * as FileSignatureLib from "../data/file-signatures.js";
+import * as FileSignatures from "../data/file-signatures.js";
 
 
 //
@@ -35,6 +35,11 @@ export interface FileReadChunkOptions
 	offset? : number;
 }
 
+export interface FileWriteOptions
+{
+	chunks : Chunk[];
+}
+
 export class File
 {
 	static read(options : FileReadOptions) : Chunk
@@ -45,7 +50,7 @@ export class File
 
 		switch (fileIdentifier)
 		{
-			case FileSignatureLib.BIG_ENDIAN:
+			case FileSignatures.BIG_ENDIAN:
 			{
 				return File.readChunk(
 					{
@@ -55,12 +60,12 @@ export class File
 					});
 			}
 
-			case FileSignatureLib.COMPRESSED:
+			case FileSignatures.COMPRESSED:
 			{
 				throw new Error("Compressed P3D files are not supported.");
 			}
 
-			case FileSignatureLib.LITTLE_ENDIAN:
+			case FileSignatures.LITTLE_ENDIAN:
 			{
 				return File.readChunk(
 					{
@@ -175,7 +180,6 @@ export class File
 
 		return new chunkClass(
 			{
-				isLittleEndian: options.isLittleEndian,
 				identifier,
 				dataSize,
 				entireSize,
@@ -184,5 +188,25 @@ export class File
 
 				...parsedData,
 			});
+	}
+
+	static write(options : FileWriteOptions) : ArrayBuffer
+	{
+		const binaryWriter = new BinaryWriter();
+
+		binaryWriter.writeUInt32(FileSignatures.LITTLE_ENDIAN);
+
+		binaryWriter.writeUInt32(12);
+
+		const childrenSize = options.chunks.reduce((size, chunk) => size + chunk.getSize(), 0);
+
+		binaryWriter.writeUInt32(12 + childrenSize);
+
+		for (const chunk of options.chunks)
+		{
+			chunk.write(binaryWriter);
+		}
+
+		return binaryWriter.getBuffer();
 	}
 }

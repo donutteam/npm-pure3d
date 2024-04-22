@@ -2,6 +2,8 @@
 // Class
 //
 
+import { BinaryWriter } from "@donutteam/binary-rw";
+
 export interface ChunkParseDataOptions
 {
 	arrayBuffer : ArrayBuffer;
@@ -11,8 +13,6 @@ export interface ChunkParseDataOptions
 
 export interface ChunkOptions
 {
-	isLittleEndian : boolean;
-
 	identifier : number;
 
 	dataSize : number;
@@ -52,5 +52,48 @@ export class Chunk
 		this.data = options.data;
 
 		this.children = options.children;
+	}
+
+	getChildrenSize() : number
+	{
+		return this.children.reduce((size, child) => size + child.getSize(), 0);
+	}
+
+	getDataSize() : number
+	{
+		return this.data?.byteLength ?? 0;
+	}
+
+	getSize() : number
+	{
+		return 12 + this.getDataSize() + this.getChildrenSize();
+	}
+
+	write(binaryWriter : BinaryWriter)
+	{
+		binaryWriter.writeUInt32(this.identifier);
+
+		const dataSize = 12 + this.getDataSize();
+
+		binaryWriter.writeUInt32(dataSize);
+
+		const entireSize = this.getSize();
+
+		binaryWriter.writeUInt32(entireSize);
+
+		this.writeData(binaryWriter);
+
+		for (const child of this.children)
+		{
+			child.write(binaryWriter);
+		}
+	}
+
+	writeData(binaryWriter : BinaryWriter)
+	{
+		if (this.data)
+		{
+			binaryWriter.writeBytes(this.data);
+		}
 	}
 }

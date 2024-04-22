@@ -7,7 +7,7 @@ import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
 
-import * as ChunkIdentifierLib from "../libs/chunk-identifier.js";
+import * as ChunkIdentifierLib from "../data/chunk-identifiers.js";
 
 //
 // Default Chunk Registry

@@ -2,11 +2,18 @@
 // Class
 //
 
+export interface ChunkParseDataOptions
+{
+	arrayBuffer : ArrayBuffer;
+
+	isLittleEndian : boolean;
+}
+
 export interface ChunkOptions
 {
 	isLittleEndian : boolean;
 
-	chunkType : number;
+	identifier : number;
 
 	dataSize : number;
 
@@ -19,9 +26,12 @@ export interface ChunkOptions
 
 export class Chunk
 {
-	isLittleEndian : boolean;
+	static parseData(_options : ChunkParseDataOptions) : object
+	{
+		return {};
+	}
 
-	type : number;
+	identifier : number;
 
 	dataSize : number;
 
@@ -33,9 +43,7 @@ export class Chunk
 
 	constructor(options : ChunkOptions)
 	{
-		this.isLittleEndian = options.isLittleEndian;
-
-		this.type = options.chunkType;
+		this.identifier = options.identifier;
 
 		this.dataSize = options.dataSize;
 

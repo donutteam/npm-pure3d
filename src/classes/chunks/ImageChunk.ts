@@ -4,61 +4,68 @@
 
 import { BinaryReader } from "@donutteam/binary-rw";
 
-import { Chunk, ChunkOptions } from "./Chunk.js";
-import * as ChunkLib from "../../libs/chunk.js";
+import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
+
+import * as ChunkLib from "../../libs/miscellaneous.js";
 
 //
 // Class
 //
 
+export interface ImageChunkOptions
+{
+	name : string;
+
+	version : number;
+
+	width : number;
+
+	height : number;
+
+	bitsPerPixel : number;
+
+	palettised : number;
+
+	hasAlpha : number;
+
+	format : number;
+}
+
 export class ImageChunk extends Chunk
 {
-	static FORMAT_RAW = 0;
+	static override parseData(options : ChunkParseDataOptions) : ImageChunkOptions
+	{
+		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-	static FORMAT_PNG = 1;
+		const nameLength = binaryReader.readUInt8();
 
-	static FORMAT_TGA = 2;
+		const name = ChunkLib.cleanP3DString(binaryReader.readString(nameLength));
 
-	static FORMAT_BMP = 3;
+		const version = binaryReader.readUInt32();
 
-	static FORMAT_IPU = 4;
+		const width = binaryReader.readUInt32();
 
-	static FORMAT_DXT = 5;
+		const height = binaryReader.readUInt32();
 
-	static FORMAT_DXT1 = 6;
+		const bitsPerPixel = binaryReader.readUInt32();
 
-	static FORMAT_DXT2 = 7;
+		const palettised = binaryReader.readUInt32();
 
-	static FORMAT_DXT3 = 8;
+		const hasAlpha = binaryReader.readUInt32();
 
-	static FORMAT_DXT4 = 9;
+		const format = binaryReader.readUInt32();
 
-	static FORMAT_DXT5 = 10;
-
-	static FORMAT_PS24BIT = 11;
-
-	static FORMAT_PS28BIT = 12;
-
-	static FORMAT_PS216BIT = 13;
-
-	static FORMAT_PS232BIT = 14;
-
-	static FORMAT_GC4BIT = 15;
-
-	static FORMAT_GC8BIT = 16;
-
-	static FORMAT_GC16BIT = 17;
-
-	static FORMAT_GC32BIT = 18;
-
-	// noinspection SpellCheckingInspection
-	static FORMAT_GCDXT1 = 19;
-
-	static FORMAT_OTHER = 20;
-
-	static FORMAT_INVALID = 21;
-
-	static FORMAT_PSP4BIT = 22;
+		return {
+			name,
+			version,
+			width,
+			height,
+			bitsPerPixel,
+			palettised,
+			hasAlpha,
+			format,
+		};
+	}
 
 	name : string;
 
@@ -70,42 +77,30 @@ export class ImageChunk extends Chunk
 
 	bitsPerPixel : number;
 
-	// noinspection SpellCheckingInspection
 	palettised : number;
 
 	hasAlpha : number;
 
 	format : number;
 
-	constructor(options : ChunkOptions)
+	constructor(options : ChunkOptions & ImageChunkOptions)
 	{
 		super(options);
 
-		if (this.data == null)
-		{
-			throw new Error("Missing data.");
-		}
+		this.name = options.name;
 
-		const binaryReader = new BinaryReader(this.data, this.isLittleEndian);
+		this.version = options.version;
 
-		const nameLength = binaryReader.readUInt8();
+		this.width = options.width;
 
-		const name = binaryReader.readString(nameLength);
+		this.height = options.height;
 
-		this.name = ChunkLib.cleanP3DString(name);
+		this.bitsPerPixel = options.bitsPerPixel;
 
-		this.version = binaryReader.readUInt32();
+		this.palettised = options.palettised;
 
-		this.width = binaryReader.readUInt32();
+		this.hasAlpha = options.hasAlpha;
 
-		this.height = binaryReader.readUInt32();
-
-		this.bitsPerPixel = binaryReader.readUInt32();
-
-		this.palettised = binaryReader.readUInt32();
-
-		this.hasAlpha = binaryReader.readUInt32();
-
-		this.format = binaryReader.readUInt32();
+		this.format = options.format;
 	}
 }

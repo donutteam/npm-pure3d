@@ -4,15 +4,15 @@
 
 import { BinaryReader } from "@donutteam/binary-rw";
 
-import { Chunk, ChunkOptions } from "./Chunk.js";
+import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
-import * as ChunkLib from "../../libs/chunk.js";
+import * as ChunkLib from "../../libs/miscellaneous.js";
 
 //
 // Class
 //
 
-export class TextureChunk extends Chunk
+export interface TextureChunkOptions
 {
 	name : string;
 
@@ -33,8 +33,71 @@ export class TextureChunk extends Chunk
 	usage : number;
 
 	priority : number;
+}
 
-	constructor(options : ChunkOptions)
+export class TextureChunk extends Chunk
+{
+	static override parseData(options : ChunkParseDataOptions) : TextureChunkOptions
+	{
+		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+
+		const nameLength = binaryReader.readUInt8();
+
+		const name = ChunkLib.cleanP3DString(binaryReader.readString(nameLength));
+
+		const version = binaryReader.readUInt32();
+
+		const width = binaryReader.readUInt32();
+
+		const height = binaryReader.readUInt32();
+
+		const bitsPerPixel = binaryReader.readUInt32();
+
+		const alphaDepth = binaryReader.readUInt32();
+
+		const numberOfMipMaps = binaryReader.readUInt32();
+
+		const textureType = binaryReader.readUInt32();
+
+		const usage = binaryReader.readUInt32();
+
+		const priority = binaryReader.readUInt32();
+
+		return {
+			name,
+			version,
+			width,
+			height,
+			bitsPerPixel,
+			alphaDepth,
+			numberOfMipMaps,
+			textureType,
+			usage,
+			priority,
+		};
+	}
+
+	name : string;
+
+	version : number;
+
+	width : number;
+
+	height : number;
+
+	bitsPerPixel : number;
+
+	alphaDepth : number;
+
+	numberOfMipMaps : number;
+
+	textureType : number;
+
+	usage : number;
+
+	priority : number;
+
+	constructor(options : ChunkOptions & TextureChunkOptions)
 	{
 		super(options);
 
@@ -43,30 +106,24 @@ export class TextureChunk extends Chunk
 			throw new Error("Missing data.");
 		}
 
-		const binaryReader = new BinaryReader(this.data, this.isLittleEndian);
+		this.name = options.name;
 
-		const nameLength = binaryReader.readUInt8();
+		this.version = options.version;
 
-		const name = binaryReader.readString(nameLength);
+		this.width = options.width;
 
-		this.name = ChunkLib.cleanP3DString(name);
+		this.height = options.height;
 
-		this.version = binaryReader.readUInt32();
+		this.bitsPerPixel = options.bitsPerPixel;
 
-		this.width = binaryReader.readUInt32();
+		this.alphaDepth = options.alphaDepth;
 
-		this.height = binaryReader.readUInt32();
+		this.numberOfMipMaps = options.numberOfMipMaps;
 
-		this.bitsPerPixel = binaryReader.readUInt32();
+		this.textureType = options.textureType;
 
-		this.alphaDepth = binaryReader.readUInt32();
+		this.usage = options.usage;
 
-		this.numberOfMipMaps = binaryReader.readUInt32();
-
-		this.textureType = binaryReader.readUInt32();
-
-		this.usage = binaryReader.readUInt32();
-
-		this.priority = binaryReader.readUInt32();
+		this.priority = options.priority;
 	}
 }

@@ -1,8 +1,12 @@
 //
-// Class
+// Imports
 //
 
 import { BinaryWriter } from "@donutteam/binary-rw";
+
+//
+// Class
+//
 
 export interface ChunkParseDataOptions
 {

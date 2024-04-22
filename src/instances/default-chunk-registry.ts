@@ -2,6 +2,7 @@
 // Imports
 //
 
+import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
@@ -13,5 +14,7 @@ import * as ChunkIdentifierLib from "../libs/chunk-identifier.js";
 //
 
 export const defaultChunkRegistry = new ChunkRegistry();
+
+defaultChunkRegistry.register(ChunkIdentifierLib.IMAGE, ImageChunk);
 
 defaultChunkRegistry.register(ChunkIdentifierLib.TEXTURE, TextureChunk);

@@ -84,14 +84,25 @@ export class BinaryReader
 
 	readLengthPrefixedString()
 	{
+		let startPosition = this.position;
+
 		const length = this.readUInt8();
 
 		let buffer = [];
 
 		for (let i = 0; i < length; i++)
 		{
-			buffer.push(this.readUInt8());
+			const character = this.readUInt8();
+
+			if (character == 0)
+			{
+				break;
+			}
+
+			buffer.push(character);
 		}
+
+		this.position = startPosition + 1 + length;
 
 		return String.fromCharCode.apply(String, buffer);
 	}

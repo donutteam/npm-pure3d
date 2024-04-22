@@ -6,27 +6,28 @@ import "source-map-support/register.js";
 
 import fs from "node:fs";
 
-import { TextureChunk } from "./classes/chunks/TextureChunk.js";
-
-import * as FileLib from "./libs/file.js";
+import * as Pure3D from "./index.js";
 
 //
-//
+// Test
 //
 
-const filePath = "E:\\Other\\The Simpsons Hit & Run\\Installs\\The Simpsons Hit & Run\\art\\chars\\a_army_m.p3d";
+const filePath = "E:\\Other\\The Simpsons Hit & Run\\Installs\\The Simpsons Hit & Run\\art\\chars\\a_amer_m.p3d";
 
 const fileData = await fs.promises.readFile(filePath);
 
-const { chunks } = FileLib.readFile(
+const rootChunk = Pure3D.File.read(
 	{
 		arrayBuffer: fileData.buffer,
 	});
 
-for (const chunk of chunks)
-{
-	if (chunk instanceof TextureChunk)
+const newFileBuffer = Pure3D.File.write(
 	{
-		console.log(JSON.stringify(chunk, null, "\t"));
-	}
-}
+		chunks: rootChunk.children,
+		littleEndian: false,
+	});
+
+await fs.promises.writeFile("D:\\Desktop\\test.p3d", Buffer.from(newFileBuffer),
+	{
+		encoding: "binary",
+	});

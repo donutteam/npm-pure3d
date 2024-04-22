@@ -38,6 +38,8 @@ export interface FileReadChunkOptions
 export interface FileWriteOptions
 {
 	chunks : Chunk[];
+
+	littleEndian? : boolean;
 }
 
 export class File
@@ -192,8 +194,10 @@ export class File
 
 	static write(options : FileWriteOptions) : ArrayBuffer
 	{
-		const binaryWriter = new BinaryWriter();
+		const binaryWriter = new BinaryWriter(undefined, options.littleEndian ?? true);
 
+		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
+		//	It will be converted to big-endian when the file is written.
 		binaryWriter.writeUInt32(FileSignatures.LITTLE_ENDIAN);
 
 		binaryWriter.writeUInt32(12);

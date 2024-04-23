@@ -10,6 +10,4 @@ export * from "./classes/chunks/TextureChunk.js";
 export * from "./classes/ChunkRegistry.js";
 export * from "./classes/File.js";
 
-export * as ChunkIdentifiers from "./data/chunk-identifiers.js";
-
 export * from "./instances/default-chunk-registry.js";

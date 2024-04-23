@@ -7,8 +7,6 @@ import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
 import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
-import * as ChunkIdentifiers from "../../data/chunk-identifiers.js";
-
 //
 // Class
 //
@@ -64,7 +62,7 @@ export class SkinChunk extends Chunk implements SkinChunkOptions
 
 		for (const child of this.children)
 		{
-			if (child.identifier == ChunkIdentifiers.OLD_PRIMITIVE_GROUP)
+			if (child.identifier == Chunk.identifiers.OLD_PRIMITIVE_GROUP)
 			{
 				numberOfPrimitiveGroups += 1;
 			}

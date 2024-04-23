@@ -18,7 +18,7 @@ export interface ShaderIntegerParameterChunkOptions
 	value : number;
 }
 
-export class ShaderIntegerParameterChunk extends Chunk
+export class ShaderIntegerParameterChunk extends Chunk implements ShaderIntegerParameterChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderIntegerParameterChunkOptions
 	{

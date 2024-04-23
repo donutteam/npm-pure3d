@@ -18,7 +18,7 @@ export interface ShaderFloatParameterChunkOptions
 	value : number;
 }
 
-export class ShaderFloatParameterChunk extends Chunk
+export class ShaderFloatParameterChunk extends Chunk implements ShaderFloatParameterChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderFloatParameterChunkOptions
 	{

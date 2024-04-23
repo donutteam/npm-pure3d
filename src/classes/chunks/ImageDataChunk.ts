@@ -16,7 +16,7 @@ export interface ImageDataChunkOptions
 	imageData : Uint8Array;
 }
 
-export class ImageDataChunk extends Chunk
+export class ImageDataChunk extends Chunk implements ImageDataChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ImageDataChunkOptions
 	{

@@ -18,7 +18,7 @@ export interface ShaderTextureParameterChunkOptions
 	value : string;
 }
 
-export class ShaderTextureParameterChunk extends Chunk
+export class ShaderTextureParameterChunk extends Chunk implements ShaderTextureParameterChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderTextureParameterChunkOptions
 	{

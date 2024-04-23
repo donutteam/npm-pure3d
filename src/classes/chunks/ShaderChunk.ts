@@ -26,7 +26,7 @@ export interface ShaderChunkOptions
 	vertexMask : number;
 }
 
-export class ShaderChunk extends Chunk
+export class ShaderChunk extends Chunk implements ShaderChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderChunkOptions
 	{

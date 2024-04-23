@@ -30,7 +30,7 @@ export interface ImageChunkOptions
 	format : number;
 }
 
-export class ImageChunk extends Chunk
+export class ImageChunk extends Chunk implements ImageChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ImageChunkOptions
 	{

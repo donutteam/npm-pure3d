@@ -24,7 +24,7 @@ export interface ShaderColourParameterChunkOptions
 	alpha : number;
 }
 
-export class ShaderColourParameterChunk extends Chunk
+export class ShaderColourParameterChunk extends Chunk implements ShaderColourParameterChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderColourParameterChunkOptions
 	{

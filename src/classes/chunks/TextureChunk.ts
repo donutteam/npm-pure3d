@@ -34,7 +34,7 @@ export interface TextureChunkOptions
 	priority : number;
 }
 
-export class TextureChunk extends Chunk
+export class TextureChunk extends Chunk implements TextureChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : TextureChunkOptions
 	{

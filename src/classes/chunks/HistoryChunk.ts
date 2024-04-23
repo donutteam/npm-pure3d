@@ -16,7 +16,7 @@ export interface HistoryChunkOptions
 	lines : string[];
 }
 
-export class HistoryChunk extends Chunk
+export class HistoryChunk extends Chunk implements HistoryChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : HistoryChunkOptions
 	{

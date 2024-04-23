@@ -32,6 +32,33 @@ export interface ImageChunkOptions
 
 export class ImageChunk extends Chunk implements ImageChunkOptions
 {
+	static formats : Record<string, number> =
+		{
+			RAW: 0,
+			PNG: 1,
+			TGA: 2,
+			BMP: 3,
+			IPU: 4,
+			DXT: 5,
+			DXT1: 6,
+			DXT2: 7,
+			DXT3: 8,
+			DXT4: 9,
+			DXT5: 10,
+			PS24BIT: 11,
+			PS28BIT: 12,
+			PS216BIT: 13,
+			PS232BIT: 14,
+			GC4BIT: 15,
+			GC8BIT: 16,
+			GC16BIT: 17,
+			GC32BIT: 18,
+			GCDXT1: 19,
+			OTHER: 20,
+			INVALID: 21,
+			PSP4BIT: 22,
+		};
+
 	static override parseData(options : ChunkParseDataOptions) : ImageChunkOptions
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);

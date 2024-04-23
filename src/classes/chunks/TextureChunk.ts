@@ -98,11 +98,6 @@ export class TextureChunk extends Chunk implements TextureChunkOptions
 	{
 		super(options);
 
-		if (this.data == null)
-		{
-			throw new Error("Missing data.");
-		}
-
 		this.name = options.name;
 
 		this.version = options.version;

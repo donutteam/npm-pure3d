@@ -20,6 +20,7 @@ import { SkeletonChunk } from "../classes/chunks/SkeletonChunk.js";
 import { SkeletonJointBonePreserveChunk } from "../classes/chunks/SkeletonJointBonePreserveChunk.js";
 import { SkeletonJointChunk } from "../classes/chunks/SkeletonJointChunk.js";
 import { SkeletonJointMirrorMapChunk } from "../classes/chunks/SkeletonJointMirrorMapChunk.js";
+import { SkinChunk } from "../classes/chunks/SkinChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
@@ -67,5 +68,7 @@ defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT, SkeletonJointChun
 defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT_BONE_PRESERVE, SkeletonJointBonePreserveChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT_MIRROR_MAP, SkeletonJointMirrorMapChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.SKIN, SkinChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.TEXTURE, TextureChunk);

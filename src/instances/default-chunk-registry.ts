@@ -17,7 +17,9 @@ import { ShaderFloatParameterChunk } from "../classes/chunks/ShaderFloatParamete
 import { ShaderIntegerParameterChunk } from "../classes/chunks/ShaderIntegerParameterChunk.js";
 import { ShaderTextureParameterChunk } from "../classes/chunks/ShaderTextureParameterChunk.js";
 import { SkeletonChunk } from "../classes/chunks/SkeletonChunk.js";
+import { SkeletonJointBonePreserveChunk } from "../classes/chunks/SkeletonJointBonePreserveChunk.js";
 import { SkeletonJointChunk } from "../classes/chunks/SkeletonJointChunk.js";
+import { SkeletonJointMirrorMapChunk } from "../classes/chunks/SkeletonJointMirrorMapChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
@@ -61,5 +63,9 @@ defaultChunkRegistry.register(ChunkIdentifiers.SHADER_TEXTURE_PARAMETER, ShaderT
 defaultChunkRegistry.register(ChunkIdentifiers.SKELETON, SkeletonChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT, SkeletonJointChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT_BONE_PRESERVE, SkeletonJointBonePreserveChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.SKELETON_JOINT_MIRROR_MAP, SkeletonJointMirrorMapChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.TEXTURE, TextureChunk);

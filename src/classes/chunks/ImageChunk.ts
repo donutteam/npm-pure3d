@@ -32,7 +32,7 @@ export interface ImageChunkOptions
 
 export class ImageChunk extends Chunk implements ImageChunkOptions
 {
-	static formats : Record<string, number> =
+	static formats =
 		{
 			RAW: 0,
 			PNG: 1,

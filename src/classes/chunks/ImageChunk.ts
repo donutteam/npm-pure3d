@@ -2,11 +2,10 @@
 // Imports
 //
 
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
-import { cleanP3DString } from "../../libs/miscellaneous.js";
+import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
@@ -35,11 +34,9 @@ export class ImageChunk extends Chunk
 {
 	static override parseData(options : ChunkParseDataOptions) : ImageChunkOptions
 	{
-		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const nameLength = binaryReader.readUInt8();
-
-		const name = cleanP3DString(binaryReader.readString(nameLength));
+		const name = binaryReader.readPure3DString();
 
 		const version = binaryReader.readUInt32();
 
@@ -104,16 +101,9 @@ export class ImageChunk extends Chunk
 		this.format = options.format;
 	}
 
-	override getDataSize() : number
+	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		return 1 + this.name.length + (4 * 7);
-	}
-
-	override writeData(binaryWriter : BinaryWriter) : void
-	{
-		binaryWriter.writeUInt8(this.name.length);
-
-		binaryWriter.writeString(this.name);
+		binaryWriter.writePure3DString(this.name);
 
 		binaryWriter.writeUInt32(this.version);
 

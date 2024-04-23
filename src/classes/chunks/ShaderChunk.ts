@@ -2,11 +2,10 @@
 // Imports
 //
 
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
-import { cleanP3DString } from "../../libs/miscellaneous.js";
+import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
@@ -31,17 +30,13 @@ export class ShaderChunk extends Chunk
 {
 	static override parseData(options : ChunkParseDataOptions) : ShaderChunkOptions
 	{
-		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const nameLength = binaryReader.readUInt8();
-
-		const name = cleanP3DString(binaryReader.readString(nameLength));
+		const name = binaryReader.readPure3DString();
 
 		const version = binaryReader.readUInt32();
 
-		const pddiShaderNameLength = binaryReader.readUInt8();
-
-		const pddiShaderName = cleanP3DString(binaryReader.readString(pddiShaderNameLength));
+		const pddiShaderName = binaryReader.readPure3DString();
 
 		const hasTranslucency = binaryReader.readUInt32();
 
@@ -88,26 +83,13 @@ export class ShaderChunk extends Chunk
 		this.vertexMask = options.vertexMask;
 	}
 
-	override getDataSize() : number
+	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		return 1 + this.name.length +
-			4 +
-			1 + this.pddiShaderName.length +
-			4 +
-			4 +
-			4 +
-			4;
-	}
-
-	override writeData(binaryWriter : BinaryWriter) : void
-	{
-		binaryWriter.writeUInt8(this.name.length);
-		binaryWriter.writeString(this.name);
+		binaryWriter.writePure3DString(this.name);
 
 		binaryWriter.writeUInt32(this.version);
 
-		binaryWriter.writeUInt8(this.pddiShaderName.length);
-		binaryWriter.writeString(this.pddiShaderName);
+		binaryWriter.writePure3DString(this.pddiShaderName);
 
 		binaryWriter.writeUInt32(this.hasTranslucency);
 

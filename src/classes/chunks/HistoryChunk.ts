@@ -2,11 +2,10 @@
 // Imports
 //
 
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
-import { cleanP3DString } from "../../libs/miscellaneous.js";
+import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
@@ -21,7 +20,7 @@ export class HistoryChunk extends Chunk
 {
 	static override parseData(options : ChunkParseDataOptions) : HistoryChunkOptions
 	{
-		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
 		const numberOfLines = binaryReader.readUInt16();
 
@@ -29,11 +28,7 @@ export class HistoryChunk extends Chunk
 
 		for (let i = 0; i < numberOfLines; i++)
 		{
-			const lineLength = binaryReader.readUInt8();
-
-			const line = cleanP3DString(binaryReader.readString(lineLength));
-
-			lines.push(line);
+			lines.push(binaryReader.readPure3DString());
 		}
 
 		return {
@@ -50,27 +45,13 @@ export class HistoryChunk extends Chunk
 		this.lines = options.lines;
 	}
 
-	override getDataSize() : number
-	{
-		let size = 2;
-
-		for (const line of this.lines)
-		{
-			size += 1 + line.length;
-		}
-
-		return size;
-	}
-
-	override writeData(binaryWriter : BinaryWriter) : void
+	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
 		binaryWriter.writeUInt16(this.lines.length);
 
 		for (const line of this.lines)
 		{
-			binaryWriter.writeUInt8(line.length);
-
-			binaryWriter.writeString(line);
+			binaryWriter.writePure3DString(line);
 		}
 	}
 }

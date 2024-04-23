@@ -2,9 +2,10 @@
 // Imports
 //
 
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
+
+import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
@@ -19,7 +20,7 @@ export class ImageDataChunk extends Chunk
 {
 	static override parseData(options : ChunkParseDataOptions) : ImageDataChunkOptions
 	{
-		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
 		const imageDataLength = binaryReader.readUInt32();
 
@@ -39,12 +40,7 @@ export class ImageDataChunk extends Chunk
 		this.imageData = options.imageData;
 	}
 
-	override getDataSize() : number
-	{
-		return 4 + this.imageData.byteLength;
-	}
-
-	override writeData(binaryWriter : BinaryWriter) : void
+	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
 		binaryWriter.writeUInt32(this.imageData.byteLength);
 

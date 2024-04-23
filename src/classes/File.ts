@@ -2,11 +2,11 @@
 // Imports
 //
 
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
 import { Chunk } from "./chunks/Chunk.js";
 
 import { ChunkRegistry } from "./ChunkRegistry.js";
+import { Pure3DBinaryReader } from "./Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "./Pure3DBinaryWriter.js";
 
 import { defaultChunkRegistry } from "../instances/default-chunk-registry.js";
 
@@ -46,7 +46,7 @@ export class File
 {
 	static read(options : FileReadOptions) : Chunk
 	{
-		const binaryReader = new BinaryReader(options.arrayBuffer, true);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, true);
 
 		const fileIdentifier = binaryReader.readUInt32();
 
@@ -96,7 +96,7 @@ export class File
 		// Create Binary Reader
 		//
 
-		const binaryReader = new BinaryReader(options.arrayBuffer, options.isLittleEndian);
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
 		binaryReader.seek(offset);
 
@@ -194,7 +194,7 @@ export class File
 
 	static write(options : FileWriteOptions) : ArrayBuffer
 	{
-		const binaryWriter = new BinaryWriter(undefined, options.littleEndian ?? true);
+		const binaryWriter = new Pure3DBinaryWriter(undefined, options.littleEndian ?? true);
 
 		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
 		//	It will be converted to big-endian when the file is written.

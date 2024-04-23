@@ -2,7 +2,7 @@
 // Imports
 //
 
-import { BinaryWriter } from "@donutteam/binary-rw";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
@@ -65,7 +65,11 @@ export class Chunk
 
 	getDataSize() : number
 	{
-		return this.data?.byteLength ?? 0;
+		const binaryWriter = new Pure3DBinaryWriter();
+
+		this.writeData(binaryWriter);
+
+		return binaryWriter.getBuffer().byteLength;
 	}
 
 	getEntireSize() : number
@@ -73,7 +77,7 @@ export class Chunk
 		return 12 + this.getDataSize() + this.getChildrenSize();
 	}
 
-	write(binaryWriter : BinaryWriter)
+	write(binaryWriter : Pure3DBinaryWriter)
 	{
 		binaryWriter.writeUInt32(this.identifier);
 
@@ -93,7 +97,7 @@ export class Chunk
 		}
 	}
 
-	writeData(binaryWriter : BinaryWriter)
+	writeData(binaryWriter : Pure3DBinaryWriter)
 	{
 		if (this.data)
 		{

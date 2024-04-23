@@ -6,6 +6,7 @@ import { AnimationChunk } from "../classes/chunks/AnimationChunk.js";
 import { AnimationGroupChunk } from "../classes/chunks/AnimationGroupChunk.js";
 import { AnimationGroupListChunk } from "../classes/chunks/AnimationGroupListChunk.js";
 import { AnimationSizeChunk } from "../classes/chunks/AnimationSizeChunk.js";
+import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
@@ -33,6 +34,8 @@ defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION_GROUP, AnimationGroupCh
 defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION_GROUP_LIST, AnimationGroupListChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION_SIZE, AnimationSizeChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.ENTITY_CHANNEL, EntityChannelChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.HISTORY, HistoryChunk);
 

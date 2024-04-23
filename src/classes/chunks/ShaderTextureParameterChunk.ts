@@ -1,0 +1,61 @@
+//
+// Imports
+//
+
+import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
+
+import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
+import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
+
+//
+// Class
+//
+
+export interface ShaderTextureParameterChunkOptions
+{
+	parameter : string;
+
+	value : string;
+}
+
+export class ShaderTextureParameterChunk extends Chunk
+{
+	static override parseData(options : ChunkParseDataOptions) : ShaderTextureParameterChunkOptions
+	{
+		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
+
+		const parameter = binaryReader.readFourCharacterCode();
+
+		const value = binaryReader.readPure3DString();
+
+		return {
+			parameter,
+			value,
+		};
+	}
+
+	parameter : string;
+
+	value : string;
+
+	constructor(options : ChunkOptions & ShaderTextureParameterChunkOptions)
+	{
+		super(options);
+
+		this.parameter = options.parameter;
+
+		this.value = options.value;
+	}
+
+	override writeData(binaryWriter : Pure3DBinaryWriter) : void
+	{
+		if (this.parameter.length > 4)
+		{
+			throw new Error("Parameter length must be 4 characters or less.");
+		}
+
+		binaryWriter.writeFourCharacterCode(this.parameter);
+
+		binaryWriter.writePure3DString(this.value);
+	}
+}

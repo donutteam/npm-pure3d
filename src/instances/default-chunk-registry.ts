@@ -6,6 +6,8 @@ import { AnimationChunk } from "../classes/chunks/AnimationChunk.js";
 import { AnimationGroupChunk } from "../classes/chunks/AnimationGroupChunk.js";
 import { AnimationGroupListChunk } from "../classes/chunks/AnimationGroupListChunk.js";
 import { AnimationSizeChunk } from "../classes/chunks/AnimationSizeChunk.js";
+import { BoundingBoxChunk } from "../classes/chunks/BoundingBoxChunk.js";
+import { BoundingSphereChunk } from "../classes/chunks/BoundingSphereChunk.js";
 import { ChannelInterpolationModeChunk } from "../classes/chunks/ChannelInterpolationModeChunk.js";
 import { Chunk } from "../classes/chunks/Chunk.js";
 import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
@@ -39,6 +41,10 @@ defaultChunkRegistry.register(Chunk.identifiers.ANIMATION_GROUP, AnimationGroupC
 defaultChunkRegistry.register(Chunk.identifiers.ANIMATION_GROUP_LIST, AnimationGroupListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.ANIMATION_SIZE, AnimationSizeChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.BOUNDING_BOX, BoundingBoxChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.BOUNDING_SPHERE, BoundingSphereChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.CHANNEL_INTERPOLATION_MODE, ChannelInterpolationModeChunk);
 

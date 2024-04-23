@@ -3,6 +3,7 @@
 //
 
 import { AnimationChunk } from "../classes/chunks/AnimationChunk.js";
+import { AnimationGroupListChunk } from "../classes/chunks/AnimationGroupListChunk.js";
 import { AnimationSizeChunk } from "../classes/chunks/AnimationSizeChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
@@ -25,6 +26,8 @@ import * as ChunkIdentifiers from "../data/chunk-identifiers.js";
 export const defaultChunkRegistry = new ChunkRegistry();
 
 defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION, AnimationChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION_GROUP_LIST, AnimationGroupListChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION_SIZE, AnimationSizeChunk);
 

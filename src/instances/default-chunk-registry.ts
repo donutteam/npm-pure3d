@@ -2,6 +2,7 @@
 // Imports
 //
 
+import { AnimationChunk } from "../classes/chunks/AnimationChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
@@ -21,6 +22,8 @@ import * as ChunkIdentifiers from "../data/chunk-identifiers.js";
 //
 
 export const defaultChunkRegistry = new ChunkRegistry();
+
+defaultChunkRegistry.register(ChunkIdentifiers.ANIMATION, AnimationChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.HISTORY, HistoryChunk);
 

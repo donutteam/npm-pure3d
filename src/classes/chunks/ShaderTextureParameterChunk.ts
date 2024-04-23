@@ -49,11 +49,6 @@ export class ShaderTextureParameterChunk extends Chunk
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		if (this.parameter.length > 4)
-		{
-			throw new Error("Parameter length must be 4 characters or less.");
-		}
-
 		binaryWriter.writeFourCharacterCode(this.parameter);
 
 		binaryWriter.writePure3DString(this.value);

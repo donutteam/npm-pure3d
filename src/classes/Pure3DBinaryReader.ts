@@ -16,7 +16,7 @@ export class Pure3DBinaryReader extends BinaryReader
 
 		if (!this.isLittleEndian)
 		{
-			rawString = rawString.split("").reverse().join("");
+			rawString = rawString.split("").toReversed().join("");
 		}
 
 		return this.trimNull(rawString);

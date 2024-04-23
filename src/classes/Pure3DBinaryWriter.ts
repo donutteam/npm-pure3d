@@ -21,7 +21,7 @@ export class Pure3DBinaryWriter extends BinaryWriter
 
 		if (!this.isLittleEndian)
 		{
-			paddedValue = paddedValue.split("").reverse().join("");
+			paddedValue = paddedValue.split("").toReversed().join("");
 		}
 
 		this.writeString(paddedValue);

@@ -4,6 +4,7 @@
 
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
+import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
@@ -19,5 +20,7 @@ export const defaultChunkRegistry = new ChunkRegistry();
 defaultChunkRegistry.register(ChunkIdentifiers.HISTORY, HistoryChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.IMAGE, ImageChunk);
+
+defaultChunkRegistry.register(ChunkIdentifiers.IMAGE_DATA, ImageDataChunk);
 
 defaultChunkRegistry.register(ChunkIdentifiers.TEXTURE, TextureChunk);

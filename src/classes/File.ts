@@ -10,8 +10,6 @@ import { Pure3DBinaryWriter } from "./Pure3DBinaryWriter.js";
 
 import { defaultChunkRegistry } from "../instances/default-chunk-registry.js";
 
-import * as FileSignatures from "../data/file-signatures.js";
-
 
 //
 // Class
@@ -44,6 +42,15 @@ export interface FileWriteOptions
 
 export class File
 {
+	static signatures =
+		{
+			BIG_ENDIAN: 0x503344FF, // ÿD3P
+
+			COMPRESSED: 0x5A443350, // P3DZ
+
+			LITTLE_ENDIAN: 0xFF443350, // P3Dÿ
+		};
+
 	static read(options : FileReadOptions) : Chunk
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, true);
@@ -52,7 +59,7 @@ export class File
 
 		switch (fileIdentifier)
 		{
-			case FileSignatures.BIG_ENDIAN:
+			case File.signatures.BIG_ENDIAN:
 			{
 				return File.readChunk(
 					{
@@ -62,12 +69,12 @@ export class File
 					});
 			}
 
-			case FileSignatures.COMPRESSED:
+			case File.signatures.COMPRESSED:
 			{
 				throw new Error("Compressed P3D files are not supported.");
 			}
 
-			case FileSignatures.LITTLE_ENDIAN:
+			case File.signatures.LITTLE_ENDIAN:
 			{
 				return File.readChunk(
 					{
@@ -198,7 +205,7 @@ export class File
 
 		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
 		//	It will be converted to big-endian when the file is written.
-		binaryWriter.writeUInt32(FileSignatures.LITTLE_ENDIAN);
+		binaryWriter.writeUInt32(File.signatures.LITTLE_ENDIAN);
 
 		binaryWriter.writeUInt32(12);
 

@@ -11,7 +11,5 @@ export * from "./classes/ChunkRegistry.js";
 export * from "./classes/File.js";
 
 export * as ChunkIdentifiers from "./data/chunk-identifiers.js";
-export * as FileSignatures from "./data/file-signatures.js";
-export * as ImageChunkFormats from "./data/image-chunk-formats.js";
 
 export * from "./instances/default-chunk-registry.js";

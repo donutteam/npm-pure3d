@@ -3,6 +3,7 @@
 //
 
 import { Chunk } from "./chunks/Chunk.js";
+import { UnknownChunk } from "./chunks/UnknownChunk.js";
 
 //
 // Class
@@ -24,7 +25,7 @@ export class ChunkRegistry
 
 	getClass(chunkIdentifier : number) : typeof Chunk
 	{
-		return this.chunkClass[chunkIdentifier] ?? Chunk;
+		return this.chunkClass[chunkIdentifier] ?? UnknownChunk;
 	}
 
 	register(chunkIdentifier : number, chunkClass : typeof Chunk)

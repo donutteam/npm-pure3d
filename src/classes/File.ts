@@ -123,7 +123,7 @@ export class File
 
 		const chunkRegistry = options.chunkRegistry ?? defaultChunkRegistry;
 
-		const chunkClass = chunkRegistry.getClass(identifier) ?? Chunk;
+		const chunkClass = chunkRegistry.getClass(identifier);
 
 		//
 		// Get Data
@@ -179,7 +179,7 @@ export class File
 
 				children.push(chunk);
 
-				offset += chunk.entireSize;
+				offset += chunk.getEntireSize();
 			}
 		}
 
@@ -190,9 +190,6 @@ export class File
 		return new chunkClass(
 			{
 				identifier,
-				dataSize,
-				entireSize,
-				data,
 				children,
 
 				...parsedData,

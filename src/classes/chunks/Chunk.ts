@@ -19,13 +19,7 @@ export interface ChunkOptions
 {
 	identifier : number;
 
-	dataSize : number;
-
-	entireSize : number;
-
-	data : ArrayBuffer | null;
-
-	children : Chunk[];
+	children? : Chunk[];
 }
 
 export class Chunk
@@ -234,25 +228,13 @@ export class Chunk
 
 	identifier : number;
 
-	dataSize : number;
-
-	entireSize : number;
-
-	data : ArrayBuffer | null;
-
 	children : Chunk[];
 
 	constructor(options : ChunkOptions)
 	{
 		this.identifier = options.identifier;
 
-		this.dataSize = options.dataSize;
-
-		this.entireSize = options.entireSize;
-
-		this.data = options.data;
-
-		this.children = options.children;
+		this.children = options.children ?? [];
 	}
 
 	getChildrenSize() : number
@@ -294,11 +276,8 @@ export class Chunk
 		}
 	}
 
-	writeData(binaryWriter : Pure3DBinaryWriter)
+	writeData(_binaryWriter : Pure3DBinaryWriter) : void
 	{
-		if (this.data)
-		{
-			binaryWriter.writeBytes(this.data);
-		}
+
 	}
 }

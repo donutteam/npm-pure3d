@@ -2,20 +2,13 @@
 // Imports
 //
 
-import { Chunk, ChunkOptions } from "./Chunk.js";
+import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
 import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
 //
 // Class
 //
-
-export interface ChunkParseDataOptions
-{
-	arrayBuffer : ArrayBuffer;
-
-	isLittleEndian : boolean;
-}
 
 export interface UnknownChunkOptions
 {

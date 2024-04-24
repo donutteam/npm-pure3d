@@ -14,6 +14,7 @@ import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
+import { OldPrimitiveGroupChunk } from "../classes/chunks/OldPrimitiveGroupChunk.js";
 import { ShaderChunk } from "../classes/chunks/ShaderChunk.js";
 import { ShaderColourParameterChunk } from "../classes/chunks/ShaderColourParameterChunk.js";
 import { ShaderFloatParameterChunk } from "../classes/chunks/ShaderFloatParameterChunk.js";
@@ -55,6 +56,8 @@ defaultChunkRegistry.register(Chunk.identifiers.HISTORY, HistoryChunk);
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE, ImageChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.OLD_PRIMITIVE_GROUP, OldPrimitiveGroupChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.SHADER, ShaderChunk);
 

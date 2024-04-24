@@ -7,7 +7,8 @@
 	"scripts": {
 		"build": "npx rimraf build && npx tsc",
 		"build:watch": "npx rimraf build && npx tsc --watch",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"test": "node --test"
 	},
 	"keywords": [
 		"pure3d"

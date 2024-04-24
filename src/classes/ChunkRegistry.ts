@@ -28,8 +28,8 @@ export class ChunkRegistry
 		return this.chunkClass[chunkIdentifier] ?? UnknownChunk;
 	}
 
-	register(chunkIdentifier : number, chunkClass : typeof Chunk)
+	register(chunkIdentifier : number, chunkClass : new (...args : any[]) => Chunk)
 	{
-		this.chunkClass[chunkIdentifier] = chunkClass;
+		this.chunkClass[chunkIdentifier] = chunkClass as typeof Chunk;
 	}
 }

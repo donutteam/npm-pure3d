@@ -3,7 +3,9 @@
 //
 
 import { Chunk } from "./chunks/Chunk.js";
-import { HistoryChunk } from "./chunks/HistoryChunk.js";
+import { ExportInfoChunk } from "./chunks/ExportInfoChunk.js";
+import { ExportInfoNamedIntegerChunk } from "./chunks/ExportInfoNamedIntegerChunk.js";
+import { ExportInfoNamedStringChunk } from "./chunks/ExportInfoNamedStringChunk.js";
 
 import { ChunkRegistry } from "./ChunkRegistry.js";
 import { Pure3DBinaryReader } from "./Pure3DBinaryReader.js";
@@ -11,6 +13,7 @@ import { Pure3DBinaryWriter } from "./Pure3DBinaryWriter.js";
 
 import { defaultChunkRegistry } from "../instances/default-chunk-registry.js";
 
+import { version } from "../version.js";
 
 //
 // Class
@@ -36,7 +39,7 @@ export interface FileReadChunkOptions
 
 export interface FileWriteOptions
 {
-	addHistoryChunk? : boolean;
+	addExportInfo? : boolean;
 
 	chunks : Chunk[];
 
@@ -208,23 +211,39 @@ export class File
 		const chunks = [ ...options.chunks ];
 
 		//
-		// Create History Chunk
+		// Add Export Info
 		//
 
-		let historyChunk : HistoryChunk | null = null;
+		const addExportInfo = options.addExportInfo ?? true;
 
-		if (options.addHistoryChunk)
+		if (addExportInfo)
 		{
-			historyChunk = new HistoryChunk(
+			const exportInfoChunk = new ExportInfoChunk(
 				{
-					lines:
+					name: "Exported From TypeScript Pure3D Library",
+					children:
 						[
-							"Created by TypeScript Pure3D Library",
-							"Created on " + new Date().toLocaleString(),
+							new ExportInfoNamedStringChunk(
+								{
+									name: "Version",
+									value: version,
+								}),
+
+							new ExportInfoNamedStringChunk(
+								{
+									name: "Date",
+									value: new Date().toLocaleString(),
+								}),
+
+							new ExportInfoNamedIntegerChunk(
+								{
+									name: "Timestamp",
+									value: Math.round(Date.now() / 1000),
+								}),
 						],
 				});
 
-			chunks.unshift(historyChunk);
+			chunks.unshift(exportInfoChunk);
 		}
 
 		//

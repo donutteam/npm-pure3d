@@ -3,6 +3,7 @@
 //
 
 import { Chunk } from "./chunks/Chunk.js";
+import { HistoryChunk } from "./chunks/HistoryChunk.js";
 
 import { ChunkRegistry } from "./ChunkRegistry.js";
 import { Pure3DBinaryReader } from "./Pure3DBinaryReader.js";
@@ -35,6 +36,8 @@ export interface FileReadChunkOptions
 
 export interface FileWriteOptions
 {
+	addHistoryChunk? : boolean;
+
 	chunks : Chunk[];
 
 	littleEndian? : boolean;
@@ -198,6 +201,36 @@ export class File
 
 	static write(options : FileWriteOptions) : ArrayBuffer
 	{
+		//
+		// Get Chunks
+		//
+
+		const chunks = [ ...options.chunks ];
+
+		//
+		// Create History Chunk
+		//
+
+		let historyChunk : HistoryChunk | null = null;
+
+		if (options.addHistoryChunk)
+		{
+			historyChunk = new HistoryChunk(
+				{
+					lines:
+						[
+							"Created by TypeScript Pure3D Library",
+							"Created on " + new Date().toLocaleString(),
+						],
+				});
+
+			chunks.unshift(historyChunk);
+		}
+
+		//
+		// Write File
+		//
+
 		const binaryWriter = new Pure3DBinaryWriter(undefined, options.littleEndian ?? true);
 
 		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
@@ -206,11 +239,11 @@ export class File
 
 		binaryWriter.writeUInt32(12);
 
-		const childrenSize = options.chunks.reduce((size, chunk) => size + chunk.getEntireSize(), 0);
+		const childrenSize = chunks.reduce((size, chunk) => size + chunk.getEntireSize(), 0);
 
 		binaryWriter.writeUInt32(12 + childrenSize);
 
-		for (const chunk of options.chunks)
+		for (const chunk of chunks)
 		{
 			chunk.write(binaryWriter);
 		}

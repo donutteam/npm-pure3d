@@ -11,6 +11,9 @@ export * from "./classes/chunks/BoundingSphereChunk.js";
 export * from "./classes/chunks/ChannelInterpolationModeChunk.js";
 export * from "./classes/chunks/Chunk.js";
 export * from "./classes/chunks/EntityChannelChunk.js";
+export * from "./classes/chunks/ExportInfoChunk.js";
+export * from "./classes/chunks/ExportInfoNamedIntegerChunk.js";
+export * from "./classes/chunks/ExportInfoNamedStringChunk.js";
 export * from "./classes/chunks/HistoryChunk.js";
 export * from "./classes/chunks/ImageChunk.js";
 export * from "./classes/chunks/ImageDataChunk.js";
@@ -25,6 +28,7 @@ export * from "./classes/chunks/SkeletonJointBonePreserveChunk.js";
 export * from "./classes/chunks/SkeletonJointChunk.js";
 export * from "./classes/chunks/SkeletonJointMirrorMapChunk.js";
 export * from "./classes/chunks/SkinChunk.js";
+export * from "./classes/chunks/SpriteChunk.js";
 export * from "./classes/chunks/TextureChunk.js";
 export * from "./classes/chunks/UnknownChunk.js";
 

@@ -41,7 +41,7 @@ await test.it("Read and write an existing Pure3D file",
 
 		const newFileBuffer = Pure3D.File.write(
 			{
-				addHistoryChunk: true,
+				addExportInfo: true,
 				chunks: rootChunk.children,
 			});
 

@@ -52,9 +52,14 @@ export class SkeletonJointMirrorMapChunk extends Chunk implements SkeletonJointM
 
 	zAxisMap : number;
 
-	constructor(options : ChunkOptions & SkeletonJointMirrorMapChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & SkeletonJointMirrorMapChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SKELETON_JOINT_MIRROR_MAP,
+			});
 
 		this.mappedJointIndex = options.mappedJointIndex;
 

@@ -38,9 +38,14 @@ export class ChannelInterpolationModeChunk extends Chunk implements ChannelInter
 
 	interpolate : number;
 
-	constructor(options : ChunkOptions & ChannelInterpolationModeChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ChannelInterpolationModeChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.CHANNEL_INTERPOLATION_MODE,
+			});
 
 		this.version = options.version;
 

@@ -66,9 +66,14 @@ export class AnimationChunk extends Chunk implements AnimationChunkOptions
 
 	cyclic : number;
 
-	constructor(options : ChunkOptions & AnimationChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & AnimationChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.ANIMATION,
+			});
 
 		this.version = options.version;
 

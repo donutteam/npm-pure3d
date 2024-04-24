@@ -59,9 +59,14 @@ export class AnimationSizeChunk extends Chunk implements AnimationSizeChunkOptio
 
 	gameCube : number;
 
-	constructor(options : ChunkOptions & AnimationSizeChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & AnimationSizeChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.ANIMATION_SIZE,
+			});
 
 		this.version = options.version;
 

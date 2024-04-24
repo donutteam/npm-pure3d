@@ -133,9 +133,14 @@ export class OldPrimitiveGroupChunk extends Chunk implements OldPrimitiveGroupCh
 
 	numberOfMatrices : number;
 
-	constructor(options : ChunkOptions & OldPrimitiveGroupChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & OldPrimitiveGroupChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.OLD_PRIMITIVE_GROUP,
+			});
 
 		this.version = options.version;
 

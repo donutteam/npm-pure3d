@@ -94,9 +94,14 @@ export class TextureChunk extends Chunk implements TextureChunkOptions
 
 	priority : number;
 
-	constructor(options : ChunkOptions & TextureChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & TextureChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.TEXTURE,
+			});
 
 		this.name = options.name;
 

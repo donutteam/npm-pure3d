@@ -81,9 +81,14 @@ export class SkeletonJointChunk extends Chunk implements SkeletonJointChunkOptio
 
 	restPose : Matrix;
 
-	constructor(options : ChunkOptions & SkeletonJointChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & SkeletonJointChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SKELETON_JOINT,
+			});
 
 		this.name = options.name;
 

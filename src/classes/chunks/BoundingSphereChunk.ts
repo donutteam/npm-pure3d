@@ -39,9 +39,14 @@ export class BoundingSphereChunk extends Chunk implements BoundingSphereChunkOpt
 
 	radius : number;
 
-	constructor(options : ChunkOptions & BoundingSphereChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & BoundingSphereChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.BOUNDING_SPHERE,
+			});
 
 		this.centre = options.centre;
 

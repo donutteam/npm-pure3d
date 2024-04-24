@@ -31,9 +31,14 @@ export class SkeletonJointBonePreserveChunk extends Chunk implements SkeletonJoi
 
 	preserveBoneLengths : number;
 
-	constructor(options : ChunkOptions & SkeletonJointBonePreserveChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & SkeletonJointBonePreserveChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SKELETON_JOINT_BONE_PRESERVE,
+			});
 
 		this.preserveBoneLengths = options.preserveBoneLengths;
 	}

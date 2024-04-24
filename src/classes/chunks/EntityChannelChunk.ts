@@ -64,9 +64,14 @@ export class EntityChannelChunk extends Chunk implements EntityChannelChunkOptio
 
 	values : string[];
 
-	constructor(options : ChunkOptions & EntityChannelChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & EntityChannelChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.ENTITY_CHANNEL,
+			});
 
 		this.version = options.version;
 

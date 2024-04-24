@@ -38,9 +38,14 @@ export class ShaderIntegerParameterChunk extends Chunk implements ShaderIntegerP
 
 	value : number;
 
-	constructor(options : ChunkOptions & ShaderIntegerParameterChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderIntegerParameterChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SHADER_INTEGER_PARAMETER,
+			});
 
 		this.parameter = options.parameter;
 

@@ -107,9 +107,14 @@ export class ImageChunk extends Chunk implements ImageChunkOptions
 
 	format : number;
 
-	constructor(options : ChunkOptions & ImageChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ImageChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.IMAGE,
+			});
 
 		this.name = options.name;
 

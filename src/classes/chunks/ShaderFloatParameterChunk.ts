@@ -38,9 +38,14 @@ export class ShaderFloatParameterChunk extends Chunk implements ShaderFloatParam
 
 	value : number;
 
-	constructor(options : ChunkOptions & ShaderFloatParameterChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderFloatParameterChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SHADER_FLOAT_PARAMETER,
+			});
 
 		this.parameter = options.parameter;
 

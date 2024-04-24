@@ -31,9 +31,14 @@ export class AnimationGroupListChunk extends Chunk implements AnimationGroupList
 
 	version : number;
 
-	constructor(options : ChunkOptions & AnimationGroupListChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & AnimationGroupListChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.ANIMATION_GROUP_LIST,
+			});
 
 		this.version = options.version;
 	}

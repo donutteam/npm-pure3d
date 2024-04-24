@@ -38,9 +38,14 @@ export class HistoryChunk extends Chunk implements HistoryChunkOptions
 
 	lines : string[];
 
-	constructor(options : ChunkOptions & HistoryChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & HistoryChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.HISTORY,
+			});
 
 		this.lines = options.lines;
 	}

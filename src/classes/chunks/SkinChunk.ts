@@ -45,9 +45,14 @@ export class SkinChunk extends Chunk implements SkinChunkOptions
 
 	skeletonName : string;
 
-	constructor(options : ChunkOptions & SkinChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & SkinChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SKIN,
+			});
 
 		this.name = options.name;
 

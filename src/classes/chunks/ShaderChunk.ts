@@ -66,9 +66,14 @@ export class ShaderChunk extends Chunk implements ShaderChunkOptions
 
 	vertexMask : number;
 
-	constructor(options : ChunkOptions & ShaderChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SHADER,
+			});
 
 		this.name = options.name;
 

@@ -38,9 +38,14 @@ export class ShaderTextureParameterChunk extends Chunk implements ShaderTextureP
 
 	value : string;
 
-	constructor(options : ChunkOptions & ShaderTextureParameterChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderTextureParameterChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SHADER_TEXTURE_PARAMETER,
+			});
 
 		this.parameter = options.parameter;
 

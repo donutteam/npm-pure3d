@@ -38,9 +38,14 @@ export class SkeletonChunk extends Chunk implements SkeletonChunkOptions
 
 	version : number;
 
-	constructor(options : ChunkOptions & SkeletonChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & SkeletonChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SKELETON,
+			});
 
 		this.name = options.name;
 

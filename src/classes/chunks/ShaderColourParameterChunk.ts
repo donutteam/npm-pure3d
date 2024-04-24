@@ -59,9 +59,14 @@ export class ShaderColourParameterChunk extends Chunk implements ShaderColourPar
 
 	alpha : number;
 
-	constructor(options : ChunkOptions & ShaderColourParameterChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderColourParameterChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.SHADER_COLOUR_PARAMETER,
+			});
 
 		this.parameter = options.parameter;
 

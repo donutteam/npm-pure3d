@@ -33,9 +33,14 @@ export class ImageDataChunk extends Chunk implements ImageDataChunkOptions
 
 	imageData : Uint8Array;
 
-	constructor(options : ChunkOptions & ImageDataChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & ImageDataChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.IMAGE_DATA,
+			});
 
 		this.imageData = options.imageData;
 	}

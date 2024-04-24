@@ -39,9 +39,14 @@ export class BoundingBoxChunk extends Chunk implements BoundingBoxChunkOptions
 
 	high : Vector3;
 
-	constructor(options : ChunkOptions & BoundingBoxChunkOptions)
+	constructor(options : Omit<ChunkOptions, "identifier"> & BoundingBoxChunkOptions)
 	{
-		super(options);
+		super(
+			{
+				...options,
+
+				identifier: Chunk.identifiers.BOUNDING_BOX,
+			});
 
 		this.low = options.low;
 

@@ -45,7 +45,7 @@ export class ColourListChunk extends Chunk implements ColourListChunkOptions
 			{
 				...options,
 
-				identifier: Chunk.identifiers.NORMAL_LIST,
+				identifier: Chunk.identifiers.COLOUR_LIST,
 			});
 
 		this.colours = options.colours;

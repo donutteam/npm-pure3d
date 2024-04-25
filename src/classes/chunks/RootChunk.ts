@@ -28,6 +28,8 @@ export class RootChunk extends Chunk implements RootChunkOptions
 		super(
 			{
 				identifier,
+
+				children: options.children ?? [],
 			});
 
 		this.isNewFile = options.isNewFile ?? true;

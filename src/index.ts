@@ -17,6 +17,7 @@ export * from "./classes/chunks/ExportInfoNamedStringChunk.js";
 export * from "./classes/chunks/HistoryChunk.js";
 export * from "./classes/chunks/ImageChunk.js";
 export * from "./classes/chunks/ImageDataChunk.js";
+export * from "./classes/chunks/NormalListChunk.js";
 export * from "./classes/chunks/OldPrimitiveGroupChunk.js";
 export * from "./classes/chunks/PositionListChunk.js";
 export * from "./classes/chunks/ShaderChunk.js";

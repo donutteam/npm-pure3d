@@ -17,6 +17,7 @@ import { ExportInfoNamedStringChunk } from "../classes/chunks/ExportInfoNamedStr
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
+import { NormalListChunk } from "../classes/chunks/NormalListChunk.js";
 import { OldPrimitiveGroupChunk } from "../classes/chunks/OldPrimitiveGroupChunk.js";
 import { PositionListChunk } from "../classes/chunks/PositionListChunk.js";
 import { ShaderChunk } from "../classes/chunks/ShaderChunk.js";
@@ -67,6 +68,8 @@ defaultChunkRegistry.register(Chunk.identifiers.HISTORY, HistoryChunk);
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE, ImageChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.NORMAL_LIST, NormalListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.OLD_PRIMITIVE_GROUP, OldPrimitiveGroupChunk);
 

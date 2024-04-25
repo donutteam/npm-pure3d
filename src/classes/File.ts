@@ -50,11 +50,11 @@ export class File
 {
 	static signatures =
 		{
+			LITTLE_ENDIAN: 0xFF443350, // P3Dÿ
+
 			BIG_ENDIAN: 0x503344FF, // ÿD3P
 
 			COMPRESSED: 0x5A443350, // P3DZ
-
-			LITTLE_ENDIAN: 0xFF443350, // P3Dÿ
 		};
 
 	static read(options : FileReadOptions) : Chunk
@@ -65,6 +65,16 @@ export class File
 
 		switch (fileIdentifier)
 		{
+			case File.signatures.LITTLE_ENDIAN:
+			{
+				return File.readChunk(
+					{
+						isLittleEndian: true,
+						arrayBuffer: options.arrayBuffer,
+						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
+					});
+			}
+
 			case File.signatures.BIG_ENDIAN:
 			{
 				return File.readChunk(
@@ -77,22 +87,12 @@ export class File
 
 			case File.signatures.COMPRESSED:
 			{
-				throw new Error("Compressed P3D files are not supported.");
-			}
-
-			case File.signatures.LITTLE_ENDIAN:
-			{
-				return File.readChunk(
-					{
-						isLittleEndian: true,
-						arrayBuffer: options.arrayBuffer,
-						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
-					});
+				throw new Error("Input buffer is a compressed Pure3D file. These are not currently supported.");
 			}
 
 			default:
 			{
-				throw new Error("Input file is not a P3D file.");
+				throw new Error("Input buffer is not a P3D file.");
 			}
 		}
 	}

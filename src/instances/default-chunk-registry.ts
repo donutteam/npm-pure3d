@@ -10,6 +10,7 @@ import { BoundingBoxChunk } from "../classes/chunks/BoundingBoxChunk.js";
 import { BoundingSphereChunk } from "../classes/chunks/BoundingSphereChunk.js";
 import { ChannelInterpolationModeChunk } from "../classes/chunks/ChannelInterpolationModeChunk.js";
 import { Chunk } from "../classes/chunks/Chunk.js";
+import { ColourListChunk } from "../classes/chunks/ColourListChunk.js";
 import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
 import { ExportInfoChunk } from "../classes/chunks/ExportInfoChunk.js";
 import { ExportInfoNamedIntegerChunk } from "../classes/chunks/ExportInfoNamedIntegerChunk.js";
@@ -54,6 +55,8 @@ defaultChunkRegistry.register(Chunk.identifiers.BOUNDING_BOX, BoundingBoxChunk);
 defaultChunkRegistry.register(Chunk.identifiers.BOUNDING_SPHERE, BoundingSphereChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.CHANNEL_INTERPOLATION_MODE, ChannelInterpolationModeChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COLOUR_LIST, ColourListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.ENTITY_CHANNEL, EntityChannelChunk);
 

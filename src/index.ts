@@ -10,6 +10,7 @@ export * from "./classes/chunks/BoundingBoxChunk.js";
 export * from "./classes/chunks/BoundingSphereChunk.js";
 export * from "./classes/chunks/ChannelInterpolationModeChunk.js";
 export * from "./classes/chunks/Chunk.js";
+export * from "./classes/chunks/ColourListChunk.js";
 export * from "./classes/chunks/EntityChannelChunk.js";
 export * from "./classes/chunks/ExportInfoChunk.js";
 export * from "./classes/chunks/ExportInfoNamedIntegerChunk.js";

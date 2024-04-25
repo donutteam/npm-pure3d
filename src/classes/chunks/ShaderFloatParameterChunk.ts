@@ -26,7 +26,7 @@ export class ShaderFloatParameterChunk extends Chunk implements ShaderFloatParam
 
 		const parameter = binaryReader.readPure3DFourCharacterCode();
 
-		const value = binaryReader.readFloat();
+		const value = binaryReader.readFloat32();
 
 		return {
 			parameter,

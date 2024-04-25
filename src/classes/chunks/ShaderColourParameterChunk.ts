@@ -4,6 +4,7 @@
 
 import { Chunk, ChunkOptions, ChunkParseDataOptions } from "./Chunk.js";
 
+import { Colour } from "../Colour.js";
 import { Pure3DBinaryReader } from "../Pure3DBinaryReader.js";
 import { Pure3DBinaryWriter } from "../Pure3DBinaryWriter.js";
 
@@ -15,13 +16,7 @@ export interface ShaderColourParameterChunkOptions
 {
 	parameter : string;
 
-	red : number;
-
-	green : number;
-
-	blue : number;
-
-	alpha : number;
+	colour : Colour;
 }
 
 export class ShaderColourParameterChunk extends Chunk implements ShaderColourParameterChunkOptions
@@ -32,32 +27,17 @@ export class ShaderColourParameterChunk extends Chunk implements ShaderColourPar
 
 		const parameter = binaryReader.readFourCharacterCode();
 
-		const red = binaryReader.readUInt8();
-
-		const green = binaryReader.readUInt8();
-
-		const blue = binaryReader.readUInt8();
-
-		const alpha = binaryReader.readUInt8();
+		const colour = binaryReader.readColour();
 
 		return {
 			parameter,
-			red,
-			green,
-			blue,
-			alpha,
+			colour,
 		};
 	}
 
 	parameter : string;
 
-	red : number;
-
-	green : number;
-
-	blue : number;
-
-	alpha : number;
+	colour : Colour;
 
 	constructor(options : Omit<ChunkOptions, "identifier"> & ShaderColourParameterChunkOptions)
 	{
@@ -70,25 +50,13 @@ export class ShaderColourParameterChunk extends Chunk implements ShaderColourPar
 
 		this.parameter = options.parameter;
 
-		this.red = options.red;
-
-		this.green = options.green;
-
-		this.blue = options.blue;
-
-		this.alpha = options.alpha;
+		this.colour = options.colour;
 	}
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
 		binaryWriter.writeFourCharacterCode(this.parameter);
 
-		binaryWriter.writeUInt8(this.red);
-
-		binaryWriter.writeUInt8(this.green);
-
-		binaryWriter.writeUInt8(this.blue);
-
-		binaryWriter.writeUInt8(this.alpha);
+		binaryWriter.writeColour(this.colour);
 	}
 }

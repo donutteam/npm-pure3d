@@ -4,12 +4,34 @@
 
 import { BinaryReader } from "@donutteam/binary-rw";
 
+import { Colour } from "./Colour.js";
+
 //
 // Class
 //
 
 export class Pure3DBinaryReader extends BinaryReader
 {
+	readColour() : Colour
+	{
+		const colorBytes = this.readBytes(4);
+
+		if (!this.isLittleEndian)
+		{
+			colorBytes.reverse();
+		}
+
+		const blue = colorBytes[0]!;
+
+		const green = colorBytes[1]!;
+
+		const red = colorBytes[2]!;
+
+		const alpha = colorBytes[3]!;
+
+		return new Colour({ blue, green, red, alpha });
+	}
+
 	readFourCharacterCode() : string
 	{
 		let rawString = this.readString(4);

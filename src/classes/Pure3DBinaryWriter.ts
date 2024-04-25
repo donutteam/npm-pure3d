@@ -4,12 +4,38 @@
 
 import { BinaryWriter } from "@donutteam/binary-rw";
 
+import { Colour } from "./Colour.js";
+
 //
 // Class
 //
 
 export class Pure3DBinaryWriter extends BinaryWriter
 {
+	writeColour(colour : Colour) : void
+	{
+		if (this.isLittleEndian)
+		{
+			this.writeUInt8(colour.blue);
+
+			this.writeUInt8(colour.green);
+
+			this.writeUInt8(colour.red);
+
+			this.writeUInt8(colour.alpha);
+		}
+		else
+		{
+			this.writeUInt8(colour.alpha);
+
+			this.writeUInt8(colour.red);
+
+			this.writeUInt8(colour.green);
+
+			this.writeUInt8(colour.blue);
+		}
+	}
+
 	writeFourCharacterCode(value : string) : void
 	{
 		if (value.length > 4)

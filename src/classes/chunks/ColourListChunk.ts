@@ -29,7 +29,7 @@ export class ColourListChunk extends Chunk implements ColourListChunkOptions
 
 		for (let i = 0; i < numberOfColours; i++)
 		{
-			colours.push(binaryReader.readColour());
+			colours.push(binaryReader.readPure3DColour());
 		}
 
 		return {
@@ -57,7 +57,7 @@ export class ColourListChunk extends Chunk implements ColourListChunkOptions
 
 		for (const colour of this.colours)
 		{
-			binaryWriter.writeColour(colour);
+			binaryWriter.writePure3DColour(colour);
 		}
 	}
 }

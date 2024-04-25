@@ -24,7 +24,7 @@ export class ShaderFloatParameterChunk extends Chunk implements ShaderFloatParam
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const parameter = binaryReader.readFourCharacterCode();
+		const parameter = binaryReader.readPure3DFourCharacterCode();
 
 		const value = binaryReader.readFloat();
 
@@ -54,7 +54,7 @@ export class ShaderFloatParameterChunk extends Chunk implements ShaderFloatParam
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		binaryWriter.writeFourCharacterCode(this.parameter);
+		binaryWriter.writePure3DFourCharacterCode(this.parameter);
 
 		binaryWriter.writeFloat32(this.value);
 	}

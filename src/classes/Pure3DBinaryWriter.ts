@@ -12,7 +12,7 @@ import { Colour } from "./Colour.js";
 
 export class Pure3DBinaryWriter extends BinaryWriter
 {
-	writeColour(colour : Colour) : void
+	writePure3DColour(colour : Colour) : void
 	{
 		if (this.isLittleEndian)
 		{
@@ -36,7 +36,7 @@ export class Pure3DBinaryWriter extends BinaryWriter
 		}
 	}
 
-	writeFourCharacterCode(value : string) : void
+	writePure3DFourCharacterCode(value : string) : void
 	{
 		if (value.length > 4)
 		{

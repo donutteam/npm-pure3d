@@ -24,7 +24,7 @@ export class ShaderTextureParameterChunk extends Chunk implements ShaderTextureP
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const parameter = binaryReader.readFourCharacterCode();
+		const parameter = binaryReader.readPure3DFourCharacterCode();
 
 		const value = binaryReader.readPure3DString();
 
@@ -54,7 +54,7 @@ export class ShaderTextureParameterChunk extends Chunk implements ShaderTextureP
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		binaryWriter.writeFourCharacterCode(this.parameter);
+		binaryWriter.writePure3DFourCharacterCode(this.parameter);
 
 		binaryWriter.writePure3DString(this.value);
 	}

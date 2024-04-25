@@ -30,7 +30,7 @@ export class EntityChannelChunk extends Chunk implements EntityChannelChunkOptio
 
 		const version = binaryReader.readUInt32();
 
-		const parameter = binaryReader.readFourCharacterCode();
+		const parameter = binaryReader.readPure3DFourCharacterCode();
 
 		const numberOfFrames = binaryReader.readUInt32();
 
@@ -91,7 +91,7 @@ export class EntityChannelChunk extends Chunk implements EntityChannelChunkOptio
 
 		binaryWriter.writeUInt32(this.version);
 
-		binaryWriter.writeFourCharacterCode(this.parameter);
+		binaryWriter.writePure3DFourCharacterCode(this.parameter);
 
 		binaryWriter.writeUInt32(this.frames.length);
 

@@ -12,7 +12,7 @@ import { Colour } from "./Colour.js";
 
 export class Pure3DBinaryReader extends BinaryReader
 {
-	readColour() : Colour
+	readPure3DColour() : Colour
 	{
 		const colorBytes = this.readBytes(4);
 
@@ -32,7 +32,7 @@ export class Pure3DBinaryReader extends BinaryReader
 		return new Colour({ blue, green, red, alpha });
 	}
 
-	readFourCharacterCode() : string
+	readPure3DFourCharacterCode() : string
 	{
 		let rawString = this.readString(4);
 

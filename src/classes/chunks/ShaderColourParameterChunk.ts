@@ -25,9 +25,9 @@ export class ShaderColourParameterChunk extends Chunk implements ShaderColourPar
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const parameter = binaryReader.readFourCharacterCode();
+		const parameter = binaryReader.readPure3DFourCharacterCode();
 
-		const colour = binaryReader.readColour();
+		const colour = binaryReader.readPure3DColour();
 
 		return {
 			parameter,
@@ -55,8 +55,8 @@ export class ShaderColourParameterChunk extends Chunk implements ShaderColourPar
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		binaryWriter.writeFourCharacterCode(this.parameter);
+		binaryWriter.writePure3DFourCharacterCode(this.parameter);
 
-		binaryWriter.writeColour(this.colour);
+		binaryWriter.writePure3DColour(this.colour);
 	}
 }

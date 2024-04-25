@@ -24,7 +24,7 @@ export class ShaderIntegerParameterChunk extends Chunk implements ShaderIntegerP
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const parameter = binaryReader.readFourCharacterCode();
+		const parameter = binaryReader.readPure3DFourCharacterCode();
 
 		const value = binaryReader.readUInt32();
 
@@ -54,7 +54,7 @@ export class ShaderIntegerParameterChunk extends Chunk implements ShaderIntegerP
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		binaryWriter.writeFourCharacterCode(this.parameter);
+		binaryWriter.writePure3DFourCharacterCode(this.parameter);
 
 		binaryWriter.writeUInt32(this.value);
 	}

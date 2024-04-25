@@ -36,7 +36,7 @@ export class AnimationChunk extends Chunk implements AnimationChunkOptions
 
 		const name = binaryReader.readPure3DString();
 
-		const animationType = binaryReader.readFourCharacterCode();
+		const animationType = binaryReader.readPure3DFourCharacterCode();
 
 		const numberOfFrames = binaryReader.readFloat32();
 
@@ -94,7 +94,7 @@ export class AnimationChunk extends Chunk implements AnimationChunkOptions
 
 		binaryWriter.writePure3DString(this.name);
 
-		binaryWriter.writeFourCharacterCode(this.animationType);
+		binaryWriter.writePure3DFourCharacterCode(this.animationType);
 
 		binaryWriter.writeFloat32(this.numberOfFrames);
 

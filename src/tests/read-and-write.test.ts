@@ -30,7 +30,7 @@ await test.it("Read and write an existing Pure3D file",
 
 		const originalFileBuffer = await fs.promises.readFile(originalFilePath);
 
-		const rootChunk = Pure3D.File.read(
+		const rootChunk = Pure3D.File.fromArrayBuffer(
 			{
 				arrayBuffer: originalFileBuffer,
 			});
@@ -39,7 +39,7 @@ await test.it("Read and write an existing Pure3D file",
 		// Create New P3D File
 		//
 
-		const newFileBuffer = Pure3D.File.write(
+		const newFileBuffer = Pure3D.File.toArrayBuffer(
 			{
 				addExportInfo: true,
 				chunks: rootChunk.children,

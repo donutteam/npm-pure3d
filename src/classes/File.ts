@@ -6,6 +6,7 @@ import { Chunk } from "./chunks/Chunk.js";
 import { ExportInfoChunk } from "./chunks/ExportInfoChunk.js";
 import { ExportInfoNamedIntegerChunk } from "./chunks/ExportInfoNamedIntegerChunk.js";
 import { ExportInfoNamedStringChunk } from "./chunks/ExportInfoNamedStringChunk.js";
+import { RootChunk } from "./chunks/RootChunk.js";
 
 import { ChunkRegistry } from "./ChunkRegistry.js";
 import { Pure3DBinaryReader } from "./Pure3DBinaryReader.js";
@@ -19,14 +20,28 @@ import { version } from "../version.js";
 // Class
 //
 
-export interface FileReadOptions
+export interface FileFromArrayBufferOptions
 {
 	arrayBuffer : ArrayBuffer;
 
 	chunkRegistry? : ChunkRegistry;
 }
 
-export interface FileReadChunkOptions
+export type FileToArrayBufferOptions = { addExportInfo? : boolean } & (FileToArrayBufferOptionsUsingChunks | FileToArrayBufferOptionsUsingRootChunk);
+
+export interface FileToArrayBufferOptionsUsingChunks
+{
+	chunks : Chunk[];
+
+	littleEndian? : boolean;
+}
+
+export interface FileToArrayBufferOptionsUsingRootChunk
+{
+	rootChunk : RootChunk;
+}
+
+interface FileReadChunkOptions
 {
 	arrayBuffer : ArrayBuffer;
 
@@ -37,13 +52,13 @@ export interface FileReadChunkOptions
 	offset? : number;
 }
 
-export interface FileWriteOptions
+interface FileReadChunkChildrenOptions
 {
-	addExportInfo? : boolean;
+	arrayBuffer : ArrayBuffer;
 
-	chunks : Chunk[];
+	chunkRegistry : ChunkRegistry;
 
-	littleEndian? : boolean;
+	isLittleEndian : boolean;
 }
 
 export class File
@@ -57,7 +72,7 @@ export class File
 			COMPRESSED: 0x5A443350, // P3DZ
 		};
 
-	static read(options : FileReadOptions) : Chunk
+	static fromArrayBuffer(options : FileFromArrayBufferOptions) : RootChunk
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, true);
 
@@ -67,22 +82,14 @@ export class File
 		{
 			case File.signatures.LITTLE_ENDIAN:
 			{
-				return File.readChunk(
-					{
-						isLittleEndian: true,
-						arrayBuffer: options.arrayBuffer,
-						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
-					});
+				break;
 			}
 
 			case File.signatures.BIG_ENDIAN:
 			{
-				return File.readChunk(
-					{
-						isLittleEndian: false,
-						arrayBuffer: options.arrayBuffer,
-						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
-					});
+				binaryReader.isLittleEndian = false;
+
+				break;
 			}
 
 			case File.signatures.COMPRESSED:
@@ -95,9 +102,124 @@ export class File
 				throw new Error("Input buffer is not a P3D file.");
 			}
 		}
+
+		return new RootChunk(
+			{
+				identifier: fileIdentifier,
+
+				// Note: If the consumer is calling this method, it's likely that
+				//	the file has been loaded from disk, so it's not a new file.
+				isNewFile: false,
+
+				children: File.#readChunkChildren(
+					{
+						arrayBuffer: options.arrayBuffer.slice(12),
+						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
+						isLittleEndian: binaryReader.isLittleEndian,
+					}),
+			});
 	}
 
-	static readChunk(options : FileReadChunkOptions) : Chunk
+	static toArrayBuffer(options : FileToArrayBufferOptions) : ArrayBuffer
+	{
+		//
+		// Get Chunks
+		//
+
+		let chunks : Chunk[];
+
+		if ("chunks" in options)
+		{
+			chunks = [ ...options.chunks ];
+		}
+		else
+		{
+			chunks = [ ...options.rootChunk.children ];
+		}
+
+		//
+		// Add Export Info Chunk (if requested)
+		//
+
+		const addExportInfo = options.addExportInfo ?? true;
+
+		if (addExportInfo)
+		{
+			chunks.unshift(this.#generateExportInfo());
+		}
+
+		//
+		// Create Binary Writer
+		//
+
+		let isLittleEndian : boolean;
+
+		if ("chunks" in options)
+		{
+			isLittleEndian = options.littleEndian ?? true;
+		}
+		else
+		{
+			isLittleEndian = options.rootChunk.identifier == File.signatures.LITTLE_ENDIAN;
+		}
+
+		const binaryWriter = new Pure3DBinaryWriter(undefined, isLittleEndian);
+
+		//
+		// Write File
+		//
+
+		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
+		//	It will be converted to big-endian when the file is written.
+		binaryWriter.writeUInt32(File.signatures.LITTLE_ENDIAN);
+
+		binaryWriter.writeUInt32(12);
+
+		const childrenSize = chunks.reduce((size, chunk) => size + chunk.getEntireSize(), 0);
+
+		binaryWriter.writeUInt32(12 + childrenSize);
+
+		for (const chunk of chunks)
+		{
+			chunk.write(binaryWriter);
+		}
+
+		//
+		// Return Buffer
+		//
+
+		return binaryWriter.getBuffer();
+	}
+
+	static #generateExportInfo() : ExportInfoChunk
+	{
+		return new ExportInfoChunk(
+			{
+				name: "Exported From TypeScript Pure3D Library",
+				children:
+					[
+						new ExportInfoNamedStringChunk(
+							{
+								name: "Version",
+								value: version,
+							}),
+
+						new ExportInfoNamedStringChunk(
+							{
+								name: "Date",
+								value: new Date().toLocaleString(),
+							}),
+
+						new ExportInfoNamedIntegerChunk(
+							{
+								name: "Timestamp",
+								value: Math.round(Date.now() / 1000),
+							}),
+					],
+			});
+	}
+
+	static #readChunk(options : FileReadChunkOptions) : Chunk
 	{
 		//
 		// Get Offset
@@ -169,24 +291,14 @@ export class File
 		{
 			const childrenDataSize = entireSize - dataSize;
 
-			let offset = 0;
-
 			const childrenArrayBuffer = options.arrayBuffer.slice(dataOffset, dataOffset + childrenDataSize);
 
-			while (offset < childrenArrayBuffer.byteLength)
-			{
-				const chunk = File.readChunk(
-					{
-						arrayBuffer: childrenArrayBuffer,
-						chunkRegistry,
-						isLittleEndian: options.isLittleEndian,
-						offset,
-					});
-
-				children.push(chunk);
-
-				offset += chunk.getEntireSize();
-			}
+			children = File.#readChunkChildren(
+				{
+					arrayBuffer: childrenArrayBuffer,
+					chunkRegistry,
+					isLittleEndian: options.isLittleEndian,
+				});
 		}
 
 		//
@@ -202,71 +314,27 @@ export class File
 			});
 	}
 
-	static write(options : FileWriteOptions) : ArrayBuffer
+	static #readChunkChildren(options : FileReadChunkChildrenOptions) : Chunk[]
 	{
-		//
-		// Get Chunks
-		//
+		const children : Chunk[] = [];
 
-		const chunks = [ ...options.chunks ];
+		let offset = 0;
 
-		//
-		// Add Export Info
-		//
-
-		const addExportInfo = options.addExportInfo ?? true;
-
-		if (addExportInfo)
+		while (offset < options.arrayBuffer.byteLength)
 		{
-			const exportInfoChunk = new ExportInfoChunk(
+			const chunk = File.#readChunk(
 				{
-					name: "Exported From TypeScript Pure3D Library",
-					children:
-						[
-							new ExportInfoNamedStringChunk(
-								{
-									name: "Version",
-									value: version,
-								}),
-
-							new ExportInfoNamedStringChunk(
-								{
-									name: "Date",
-									value: new Date().toLocaleString(),
-								}),
-
-							new ExportInfoNamedIntegerChunk(
-								{
-									name: "Timestamp",
-									value: Math.round(Date.now() / 1000),
-								}),
-						],
+					arrayBuffer: options.arrayBuffer,
+					chunkRegistry: options.chunkRegistry,
+					isLittleEndian: options.isLittleEndian,
+					offset,
 				});
 
-			chunks.unshift(exportInfoChunk);
+			children.push(chunk);
+
+			offset += chunk.getEntireSize();
 		}
 
-		//
-		// Write File
-		//
-
-		const binaryWriter = new Pure3DBinaryWriter(undefined, options.littleEndian ?? true);
-
-		// Note: Even when writing a big-endian file, the file signature here should still be little-endian.
-		//	It will be converted to big-endian when the file is written.
-		binaryWriter.writeUInt32(File.signatures.LITTLE_ENDIAN);
-
-		binaryWriter.writeUInt32(12);
-
-		const childrenSize = chunks.reduce((size, chunk) => size + chunk.getEntireSize(), 0);
-
-		binaryWriter.writeUInt32(12 + childrenSize);
-
-		for (const chunk of chunks)
-		{
-			chunk.write(binaryWriter);
-		}
-
-		return binaryWriter.getBuffer();
+		return children;
 	}
 }

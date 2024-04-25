@@ -206,7 +206,7 @@ async function scanFile(options : ScanFileOptions) : Promise<ScanFileResult>
 
 	try
 	{
-		const rootChunk = Pure3D.File.read(
+		const rootChunk = Pure3D.File.fromArrayBuffer(
 			{
 				arrayBuffer: fileBuffer,
 			});

@@ -103,7 +103,7 @@ await test.it("Should create a texture",
 		// Create File
 		//
 
-		const outputFileBuffer = Pure3D.File.write(
+		const outputFileBuffer = Pure3D.File.toArrayBuffer(
 			{
 				addExportInfo: true,
 				chunks:

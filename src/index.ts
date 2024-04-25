@@ -39,6 +39,7 @@ export * from "./classes/File.js";
 export * from "./classes/Matrix.js";
 export * from "./classes/Pure3DBinaryReader.js";
 export * from "./classes/Pure3DBinaryWriter.js";
+export * from "./classes/Vector2.js";
 export * from "./classes/Vector3.js";
 
 export * from "./instances/default-chunk-registry.js";

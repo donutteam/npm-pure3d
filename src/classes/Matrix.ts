@@ -1,10 +1,4 @@
 //
-// Imports
-//
-
-import { BinaryReader, BinaryWriter } from "@donutteam/binary-rw";
-
-//
 // Class
 //
 
@@ -45,71 +39,6 @@ export interface MatrixOptions
 
 export class Matrix implements MatrixOptions
 {
-	static readBinary(binaryReader : BinaryReader) : Matrix
-	{
-		const matrix : number[] = [];
-
-		for (let i = 0; i < 16; i++)
-		{
-			matrix.push(binaryReader.readFloat32());
-		}
-
-		return new Matrix(
-			{
-				m11: matrix[0]!,
-				m12: matrix[1]!,
-				m13: matrix[2]!,
-				m14: matrix[3]!,
-				m21: matrix[4]!,
-				m22: matrix[5]!,
-				m23: matrix[6]!,
-				m24: matrix[7]!,
-				m31: matrix[8]!,
-				m32: matrix[9]!,
-				m33: matrix[10]!,
-				m34: matrix[11]!,
-				m41: matrix[12]!,
-				m42: matrix[13]!,
-				m43: matrix[14]!,
-				m44: matrix[15]!,
-			});
-	}
-
-	static writeBinary(binaryWriter : BinaryWriter, matrix : Matrix) : void
-	{
-		binaryWriter.writeFloat32(matrix.m11);
-
-		binaryWriter.writeFloat32(matrix.m12);
-
-		binaryWriter.writeFloat32(matrix.m13);
-
-		binaryWriter.writeFloat32(matrix.m14);
-
-		binaryWriter.writeFloat32(matrix.m21);
-
-		binaryWriter.writeFloat32(matrix.m22);
-
-		binaryWriter.writeFloat32(matrix.m23);
-
-		binaryWriter.writeFloat32(matrix.m24);
-
-		binaryWriter.writeFloat32(matrix.m31);
-
-		binaryWriter.writeFloat32(matrix.m32);
-
-		binaryWriter.writeFloat32(matrix.m33);
-
-		binaryWriter.writeFloat32(matrix.m34);
-
-		binaryWriter.writeFloat32(matrix.m41);
-
-		binaryWriter.writeFloat32(matrix.m42);
-
-		binaryWriter.writeFloat32(matrix.m43);
-
-		binaryWriter.writeFloat32(matrix.m44);
-	}
-
 	m11 : number;
 
 	m12 : number;

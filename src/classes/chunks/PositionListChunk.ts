@@ -29,7 +29,7 @@ export class PositionListChunk extends Chunk implements PositionListChunkOptions
 
 		for (let i = 0; i < numberOfPositions; i++)
 		{
-			positions.push(Vector3.readBinary(binaryReader));
+			positions.push(binaryReader.readPure3DVector3());
 		}
 
 		return {
@@ -57,7 +57,7 @@ export class PositionListChunk extends Chunk implements PositionListChunkOptions
 
 		for (const position of this.positions)
 		{
-			Vector3.writeBinary(binaryWriter, position);
+			binaryWriter.writePure3DVector3(position);
 		}
 	}
 }

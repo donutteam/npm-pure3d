@@ -25,7 +25,7 @@ export class BoundingSphereChunk extends Chunk implements BoundingSphereChunkOpt
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const centre = Vector3.readBinary(binaryReader);
+		const centre = binaryReader.readPure3DVector3();
 
 		const radius = binaryReader.readFloat32();
 
@@ -55,7 +55,7 @@ export class BoundingSphereChunk extends Chunk implements BoundingSphereChunkOpt
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		Vector3.writeBinary(binaryWriter, this.centre);
+		binaryWriter.writePure3DVector3(this.centre);
 
 		binaryWriter.writeFloat32(this.radius);
 	}

@@ -51,7 +51,7 @@ export class SkeletonJointChunk extends Chunk implements SkeletonJointChunkOptio
 
 		const twistAxis = binaryReader.readInt32();
 
-		const matrix = Matrix.readBinary(binaryReader);
+		const restPose = binaryReader.readPure3DMatrix();
 
 		return {
 			name,
@@ -61,7 +61,7 @@ export class SkeletonJointChunk extends Chunk implements SkeletonJointChunkOptio
 			primaryAxis,
 			secondaryAxis,
 			twistAxis,
-			restPose: matrix,
+			restPose,
 		};
 	}
 
@@ -123,6 +123,6 @@ export class SkeletonJointChunk extends Chunk implements SkeletonJointChunkOptio
 
 		binaryWriter.writeInt32(this.twistAxis);
 
-		Matrix.writeBinary(binaryWriter, this.restPose);
+		binaryWriter.writePure3DMatrix(this.restPose);
 	}
 }

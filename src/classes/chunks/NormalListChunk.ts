@@ -29,7 +29,7 @@ export class NormalListChunk extends Chunk implements NormalListChunkOptions
 
 		for (let i = 0; i < numberOfNormals; i++)
 		{
-			normals.push(Vector3.readBinary(binaryReader));
+			normals.push(binaryReader.readPure3DVector3());
 		}
 
 		return {
@@ -57,7 +57,7 @@ export class NormalListChunk extends Chunk implements NormalListChunkOptions
 
 		for (const position of this.normals)
 		{
-			Vector3.writeBinary(binaryWriter, position);
+			binaryWriter.writePure3DVector3(position);
 		}
 	}
 }

@@ -25,9 +25,9 @@ export class BoundingBoxChunk extends Chunk implements BoundingBoxChunkOptions
 	{
 		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
-		const low = Vector3.readBinary(binaryReader);
+		const low = binaryReader.readPure3DVector3();
 
-		const high = Vector3.readBinary(binaryReader);
+		const high = binaryReader.readPure3DVector3();
 
 		return {
 			low,
@@ -55,8 +55,8 @@ export class BoundingBoxChunk extends Chunk implements BoundingBoxChunkOptions
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		Vector3.writeBinary(binaryWriter, this.low);
+		binaryWriter.writePure3DVector3(this.low);
 
-		Vector3.writeBinary(binaryWriter, this.high);
+		binaryWriter.writePure3DVector3(this.high);
 	}
 }

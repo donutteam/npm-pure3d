@@ -15,7 +15,7 @@ export interface UnknownChunkOptions
 	data : ArrayBuffer | null;
 }
 
-export class UnknownChunk extends Chunk
+export class UnknownChunk extends Chunk implements UnknownChunkOptions
 {
 	static override parseData(options : ChunkParseDataOptions) : UnknownChunkOptions
 	{

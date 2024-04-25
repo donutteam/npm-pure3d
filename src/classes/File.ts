@@ -27,13 +27,17 @@ export interface FileFromArrayBufferOptions
 	chunkRegistry? : ChunkRegistry;
 }
 
-export type FileToArrayBufferOptions = { addExportInfo? : boolean } & (FileToArrayBufferOptionsUsingChunks | FileToArrayBufferOptionsUsingRootChunk);
+export type FileToArrayBufferOptions =
+	{
+		addExportInfo? : boolean;
+
+		littleEndian? : boolean;
+	} &
+	(FileToArrayBufferOptionsUsingChunks | FileToArrayBufferOptionsUsingRootChunk);
 
 export interface FileToArrayBufferOptionsUsingChunks
 {
 	chunks : Chunk[];
-
-	littleEndian? : boolean;
 }
 
 export interface FileToArrayBufferOptionsUsingRootChunk
@@ -160,7 +164,7 @@ export class File
 		}
 		else
 		{
-			isLittleEndian = options.rootChunk.identifier == File.signatures.LITTLE_ENDIAN;
+			isLittleEndian = options.littleEndian ?? options.rootChunk.identifier == File.signatures.LITTLE_ENDIAN;
 		}
 
 		const binaryWriter = new Pure3DBinaryWriter(undefined, isLittleEndian);

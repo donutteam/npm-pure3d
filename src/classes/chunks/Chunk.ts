@@ -226,7 +226,7 @@ export class Chunk
 		return {};
 	}
 
-	identifier : number;
+	readonly identifier : number;
 
 	children : Chunk[];
 

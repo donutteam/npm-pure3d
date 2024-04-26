@@ -20,7 +20,7 @@ interface Pure3DGame
 {
 	title : string;
 
-	platform : "PC" | "Xbox";
+	platform : "GameCube" | "PC" | "Xbox";
 
 	directoryPath : string;
 }
@@ -28,19 +28,57 @@ interface Pure3DGame
 const pure3dGames : Pure3DGame[] =
 	[
 		{
-			title: "Prototype 2",
-			platform: "PC",
-			directoryPath: "F:\\Pure3D Games\\Prototype 2 [PC]",
+			title: "Dark Summit",
+			platform: "GameCube",
+			directoryPath: "F:\\Pure3D Games\\Dark Summit [GameCube]",
 		},
+
+		{
+			title: "The Simpsons Road Rage",
+			platform: "Xbox",
+			directoryPath: "F:\\Pure3D Games\\The Simpsons Road Rage [Xbox]",
+		},
+
+		// TODO: Tetris Worlds
+
+		// TODO: Monsters, Inc. Scream Arena
+
+		// TODO: James Cameron's Dark Angel
+
+		// TODO: CSI: Crime Scene Investigation
+
+		// TODO: Hulk
+
 		{
 			title: "The Simpsons Hit & Run",
 			platform: "PC",
 			directoryPath: "F:\\Pure3D Games\\The Simpsons Hit & Run [PC]",
 		},
+
+		// TODO: CSI: Dark Motives
+
+		// TODO: CSI: Miami
+
+		// TODO: The Incredible Hulk: Ultimate Destruction
+
+		// TODO: Crash Tag Team Racing
+
+		// TODO: Scarface: The World Is Yours
+
+		// TODO: Crash of the Titans
+
+		// TODO: Crash Mind Over Mutant
+
 		{
-			title: "The Simpsons Road Rage",
-			platform: "Xbox",
-			directoryPath: "F:\\Pure3D Games\\The Simpsons Road Rage [Xbox]",
+			title: "Prototype",
+			platform: "PC",
+			directoryPath: "F:\\Pure3D Games\\Prototype [PC]",
+		},
+
+		{
+			title: "Prototype 2",
+			platform: "PC",
+			directoryPath: "F:\\Pure3D Games\\Prototype 2 [PC]",
 		},
 	];
 
@@ -141,7 +179,7 @@ async function processFile(pure3dGame : Pure3DGame, pure3dFilePath : string) : P
 	}
 	catch (error)
 	{
-		console.error("Failed to load P3D file: " + pure3dFilePath, error);
+		// TODO: Keep track of which files failed to load, include in report
 	}
 }
 

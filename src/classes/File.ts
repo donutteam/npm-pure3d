@@ -167,7 +167,7 @@ export class File
 			isLittleEndian = options.littleEndian ?? options.rootChunk.identifier == File.signatures.LITTLE_ENDIAN;
 		}
 
-		const binaryWriter = new Pure3DBinaryWriter(undefined, isLittleEndian);
+		const binaryWriter = new Pure3DBinaryWriter(isLittleEndian);
 
 		//
 		// Write File

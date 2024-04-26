@@ -16,7 +16,7 @@
 	"author": "Donut Team",
 	"license": "MIT",
 	"peerDependencies": {
-		"@donutteam/binary-rw": "^1.3.0"
+		"@donutteam/binary-rw": "^2.0.0"
 	},
 	"devDependencies": {
 		"@donutteam/typescript-config": "^1.0.0",

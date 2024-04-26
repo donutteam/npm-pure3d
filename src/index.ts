@@ -37,6 +37,7 @@ export * from "./classes/chunks/UnknownChunk.js";
 
 export * from "./classes/ChunkRegistry.js";
 export * from "./classes/File.js";
+export * from "./classes/LZRCompression.js";
 export * from "./classes/Matrix.js";
 export * from "./classes/Pure3DBinaryReader.js";
 export * from "./classes/Pure3DBinaryWriter.js";

@@ -25,10 +25,9 @@ for (const directoryPath of directoryPaths)
 		continue;
 	}
 
-	const { p3dFilePaths: directoryP3DFilePaths } = await scanDirectory(
+	const { pure3dFilePaths: directoryP3DFilePaths } = await scanDirectory(
 		{
 			directoryPath,
-			identifiers,
 			depth: 0,
 		});
 

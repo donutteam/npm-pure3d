@@ -13,24 +13,24 @@ export interface ScanDirectoryOptions
 {
 	directoryPath : string;
 
-	identifiers : number[];
-
-	depth : number;
+	depth? : number;
 }
 
 export interface ScanDirectoryResult
 {
-	p3dFilePaths : string[];
+	pure3dFilePaths : string[];
 }
 
 export async function scanDirectory(options : ScanDirectoryOptions) : Promise<ScanDirectoryResult>
 {
+	const depth = options.depth ?? 0;
+
 	const entries = await fs.promises.readdir(options.directoryPath,
 		{
 			withFileTypes: true,
 		});
 
-	const p3dFilePaths : string[] = [];
+	const pure3dFilePaths : string[] = [];
 
 	for (const entry of entries)
 	{
@@ -38,14 +38,13 @@ export async function scanDirectory(options : ScanDirectoryOptions) : Promise<Sc
 		{
 			const scanPath = path.join(options.directoryPath, entry.name);
 
-			const { p3dFilePaths: directoryp3dFilePaths } = await scanDirectory(
+			const { pure3dFilePaths: directoryPure3dFilePaths } = await scanDirectory(
 				{
 					directoryPath: scanPath,
-					identifiers: options.identifiers,
-					depth: options.depth + 1,
+					depth: depth + 1,
 				});
 
-			p3dFilePaths.push(...directoryp3dFilePaths);
+			pure3dFilePaths.push(...directoryPure3dFilePaths);
 
 			continue;
 		}
@@ -57,10 +56,10 @@ export async function scanDirectory(options : ScanDirectoryOptions) : Promise<Sc
 			continue;
 		}
 
-		p3dFilePaths.push(filePath);
+		pure3dFilePaths.push(filePath);
 	}
 
 	return {
-		p3dFilePaths,
+		pure3dFilePaths,
 	};
 }

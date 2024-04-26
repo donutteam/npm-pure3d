@@ -9,6 +9,7 @@ import { ExportInfoNamedStringChunk } from "./chunks/ExportInfoNamedStringChunk.
 import { RootChunk } from "./chunks/RootChunk.js";
 
 import { ChunkRegistry } from "./ChunkRegistry.js";
+import { LZRCompression } from "./LZRCompression.js";
 import { Pure3DBinaryReader } from "./Pure3DBinaryReader.js";
 import { Pure3DBinaryWriter } from "./Pure3DBinaryWriter.js";
 
@@ -78,9 +79,34 @@ export class File
 
 	static fromArrayBuffer(options : FileFromArrayBufferOptions) : RootChunk
 	{
-		const binaryReader = new Pure3DBinaryReader(options.arrayBuffer, true);
+		//
+		// Read Buffer
+		//
 
-		const fileIdentifier = binaryReader.readUInt32();
+		let arrayBuffer = options.arrayBuffer;
+
+		let binaryReader = new Pure3DBinaryReader(arrayBuffer, true);
+
+		let fileIdentifier = binaryReader.readUInt32();
+
+		//
+		// Decompress File (if needed)
+		//
+
+		if (fileIdentifier == File.signatures.COMPRESSED)
+		{
+			binaryReader.seek(0);
+
+			arrayBuffer = LZRCompression.decompressFile(binaryReader);
+
+			const uncompressedBinaryReader = new Pure3DBinaryReader(arrayBuffer, true);
+
+			fileIdentifier = uncompressedBinaryReader.readUInt32();
+		}
+
+		//
+		// Handle Endianness
+		//
 
 		switch (fileIdentifier)
 		{
@@ -96,16 +122,15 @@ export class File
 				break;
 			}
 
-			case File.signatures.COMPRESSED:
-			{
-				throw new Error("Input buffer is a compressed Pure3D file. These are not currently supported.");
-			}
-
 			default:
 			{
 				throw new Error("Input buffer is not a P3D file.");
 			}
 		}
+
+		//
+		// Create Root Chunk
+		//
 
 		return new RootChunk(
 			{
@@ -117,7 +142,7 @@ export class File
 
 				children: File.#readChunkChildren(
 					{
-						arrayBuffer: options.arrayBuffer.slice(12),
+						arrayBuffer: arrayBuffer.slice(12),
 						chunkRegistry: options.chunkRegistry ?? defaultChunkRegistry,
 						isLittleEndian: binaryReader.isLittleEndian,
 					}),

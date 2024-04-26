@@ -2,6 +2,8 @@
 // Imports
 //
 
+import "source-map-support/register.js";
+
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -32,7 +34,7 @@ await test.it("Read and write an existing Pure3D file",
 
 		const rootChunk = Pure3D.File.fromArrayBuffer(
 			{
-				arrayBuffer: originalFileBuffer,
+				arrayBuffer: originalFileBuffer.buffer,
 			});
 
 		//

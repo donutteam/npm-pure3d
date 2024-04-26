@@ -36,6 +36,7 @@ export * from "./classes/chunks/TextureChunk.js";
 export * from "./classes/chunks/UnknownChunk.js";
 
 export * from "./classes/ChunkRegistry.js";
+export * from "./classes/Colour.js";
 export * from "./classes/File.js";
 export * from "./classes/LZRCompression.js";
 export * from "./classes/Matrix.js";

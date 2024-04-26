@@ -13,135 +13,104 @@ import * as Pure3D from "../index.js";
 import { scanDirectory } from "../libs/util.js";
 
 //
-//
+// Classes
 //
 
-interface Pure3DGame
+interface EncounteredChunkOptions
+{
+	identifier : number;
+}
+
+class EncounteredChunk implements EncounteredChunkOptions
+{
+	identifier : number;
+
+	games : Set<Game>;
+
+	filePaths : Set<string>;
+
+	constructor(options : EncounteredChunkOptions)
+	{
+		this.identifier = options.identifier;
+
+		this.games = new Set<Game>;
+
+		this.filePaths = new Set<string>;
+	}
+}
+
+interface GameOptions
 {
 	title : string;
 
-	platform : "GameCube" | "PC" | "Xbox";
+	platform : GamePlatform;
 
 	directoryPath : string;
 }
 
-const pure3dGames : Pure3DGame[] =
-	[
-		{
-			title: "Dark Summit",
-			platform: "GameCube",
-			directoryPath: "F:\\Pure3D Games\\Dark Summit [GameCube]",
-		},
+type GamePlatform = "GameCube" | "PC" | "Xbox";
 
-		{
-			title: "The Simpsons Road Rage",
-			platform: "Xbox",
-			directoryPath: "F:\\Pure3D Games\\The Simpsons Road Rage [Xbox]",
-		},
-
-		// TODO: Tetris Worlds
-
-		// TODO: Monsters, Inc. Scream Arena
-
-		// TODO: James Cameron's Dark Angel
-
-		// TODO: CSI: Crime Scene Investigation
-
-		// TODO: Hulk
-
-		{
-			title: "The Simpsons Hit & Run",
-			platform: "PC",
-			directoryPath: "F:\\Pure3D Games\\The Simpsons Hit & Run [PC]",
-		},
-
-		// TODO: CSI: Dark Motives
-
-		// TODO: CSI: Miami
-
-		// TODO: The Incredible Hulk: Ultimate Destruction
-
-		// TODO: Crash Tag Team Racing
-
-		// TODO: Scarface: The World Is Yours
-
-		// TODO: Crash of the Titans
-
-		// TODO: Crash Mind Over Mutant
-
-		{
-			title: "Prototype",
-			platform: "PC",
-			directoryPath: "F:\\Pure3D Games\\Prototype [PC]",
-		},
-
-		{
-			title: "Prototype 2",
-			platform: "PC",
-			directoryPath: "F:\\Pure3D Games\\Prototype 2 [PC]",
-		},
-	];
-
-interface EncounteredChunk
+class Game implements GameOptions
 {
-	identifier : number;
+	title : string;
 
-	games : Set<Pure3DGame>;
+	platform : GamePlatform;
 
-	filePaths : Set<string>;
+	directoryPath : string;
+
+	constructor(options : GameOptions)
+	{
+		this.title = options.title;
+
+		this.platform = options.platform;
+
+		this.directoryPath = options.directoryPath;
+	}
 }
 
-const encounteredChunkMap = new Map<number, EncounteredChunk>();
-
-await main();
-
-//
-// Functions
-//
-
-async function main() : Promise<void>
+class EncounteredChunksReport
 {
-	for (const pure3dGame of pure3dGames)
+	readonly #encounteredChunksMap : Map<number, EncounteredChunk>;
+
+	readonly #failedFiles : string[];
+
+	constructor()
 	{
-		console.log("Scanning directory for P3D files: " + pure3dGame.directoryPath);
+		this.#encounteredChunksMap = new Map<number, EncounteredChunk>();
 
-		try
-		{
-			const { pure3dFilePaths } = await scanDirectory(
-				{
-					directoryPath: pure3dGame.directoryPath,
-					depth: 0,
-				});
-
-			// rewrite progress bar with custom template, show current file
-			const progressBar = new cliProgress.SingleBar(
-				{
-					format: "{bar} {percentage}% | {value}/{total} | {file}",
-				});
-
-			progressBar.start(pure3dFilePaths.length, 0);
-
-			for (const pure3dFilePath of pure3dFilePaths)
-			{
-				progressBar.increment(undefined,
-					{
-						file: pure3dFilePath,
-					});
-
-				await processFile(pure3dGame, pure3dFilePath);
-			}
-
-			progressBar.stop();
-		}
-		catch (error)
-		{
-			console.error("Failed to scan directory: " + pure3dGame.directoryPath, error);
-		}
+		this.#failedFiles = [];
 	}
 
-	const encounteredChunks = Array.from(encounteredChunkMap.values())
-		.sort(
-			(a, b) =>
+	addFailedFile(filePath : string) : void
+	{
+		this.#failedFiles.push(filePath);
+	}
+
+	getFailedFiles() : string[]
+	{
+		return [ ...this.#failedFiles ];
+	}
+
+	logEncounteredChunk(game : Game, identifier : number, filePath : string) : void
+	{
+		const encounteredChunk = this.#encounteredChunksMap.get(identifier) ??
+			{
+				identifier: identifier,
+				games: new Set<Game>(),
+				filePaths: new Set<string>(),
+			} satisfies EncounteredChunk;
+
+		encounteredChunk.games.add(game);
+
+		encounteredChunk.filePaths.add(filePath);
+
+		this.#encounteredChunksMap.set(identifier, encounteredChunk);
+	}
+
+	getEncounteredChunks()
+	{
+		return Array.from(this.#encounteredChunksMap.values())
+			.sort((a, b) =>
 			{
 				// sort by number of games desc
 				// then identifier asc
@@ -155,13 +124,75 @@ async function main() : Promise<void>
 
 				return a.identifier - b.identifier;
 			});
+	}
 
-	await writeHtmlReport(encounteredChunks);
+	toJSON()
+	{
+		return {
+			failedFiles: this.getFailedFiles(),
 
-	await writeJsonReport(encounteredChunks);
+			encounteredChunks: this.getEncounteredChunks()
+				.map(encounteredChunk =>
+				{
+					return {
+						identifier: encounteredChunk.identifier,
+						games: Array.from(encounteredChunk.games.values()).map(game => game.title + " (" + game.platform + ")"),
+						filePaths: Array.from(encounteredChunk.filePaths.values()),
+					};
+				}),
+		};
+	}
 }
 
-async function processFile(pure3dGame : Pure3DGame, pure3dFilePath : string) : Promise<void>
+//
+// Functions
+//
+
+async function scanGames(games : Game[]) : Promise<EncounteredChunksReport>
+{
+	const encounteredChunksReport = new EncounteredChunksReport();
+
+	for (const game of games)
+	{
+		console.log("Scanning game directory for P3D files: " + game.directoryPath);
+
+		try
+		{
+			const { pure3dFilePaths } = await scanDirectory(
+				{
+					directoryPath: game.directoryPath,
+					depth: 0,
+				});
+
+			let progressBar = new cliProgress.SingleBar(
+				{
+					format: "{bar} {percentage}% | {value}/{total} | {file}",
+				});
+
+			progressBar.start(pure3dFilePaths.length, 0);
+
+			for (const pure3dFilePath of pure3dFilePaths)
+			{
+				progressBar!.increment(undefined,
+					{
+						file: pure3dFilePath,
+					});
+
+				await processFile(encounteredChunksReport, game, pure3dFilePath);
+			}
+
+			progressBar!.stop();
+		}
+		catch (error)
+		{
+			console.error("Failed to scan directory: " + game.directoryPath, error);
+		}
+	}
+
+	return encounteredChunksReport;
+}
+
+async function processFile(encounteredChunksReport : EncounteredChunksReport, game : Game, pure3dFilePath : string) : Promise<void>
 {
 	try
 	{
@@ -174,38 +205,29 @@ async function processFile(pure3dGame : Pure3DGame, pure3dFilePath : string) : P
 
 		for (const chunk of rootChunk.children)
 		{
-			processChunk(pure3dGame, pure3dFilePath, chunk);
+			processChunk(encounteredChunksReport, game, pure3dFilePath, chunk);
 		}
 	}
 	catch (error)
 	{
-		// TODO: Keep track of which files failed to load, include in report
+		encounteredChunksReport.addFailedFile(pure3dFilePath);
 	}
 }
 
-function processChunk(pure3dGame : Pure3DGame, pure3dFilePath : string, chunk : Pure3D.Chunk) : void
+function processChunk(encounteredChunksReport : EncounteredChunksReport, game : Game, pure3dFilePath : string, chunk : Pure3D.Chunk) : void
 {
-	const encounteredChunk = encounteredChunkMap.get(chunk.identifier) ??
-		{
-			identifier: chunk.identifier,
-			games: new Set<Pure3DGame>(),
-			filePaths: new Set<string>(),
-		} satisfies EncounteredChunk;
-
-	encounteredChunk.games.add(pure3dGame);
-
-	encounteredChunk.filePaths.add(pure3dFilePath);
-
-	encounteredChunkMap.set(chunk.identifier, encounteredChunk);
+	encounteredChunksReport.logEncounteredChunk(game, chunk.identifier, pure3dFilePath);
 
 	for (const child of chunk.children)
 	{
-		processChunk(pure3dGame, pure3dFilePath, child);
+		processChunk(encounteredChunksReport, game, pure3dFilePath, child);
 	}
 }
 
-async function writeHtmlReport(encounteredChunks : EncounteredChunk[]) : Promise<void>
+async function writeHtmlReport(encounteredChunksReport : EncounteredChunksReport) : Promise<void>
 {
+	const encounteredChunks = encounteredChunksReport.getEncounteredChunks();
+
 	const tableRowElements = encounteredChunks.map(
 		(encounteredChunk) =>
 		{
@@ -272,22 +294,84 @@ async function writeHtmlReport(encounteredChunks : EncounteredChunk[]) : Promise
 		});
 }
 
-async function writeJsonReport(encounteredChunks : EncounteredChunk[]) : Promise<void>
+async function writeJsonReport(encounteredChunksReport : EncounteredChunksReport) : Promise<void>
 {
-	const encounteredChunks2 = encounteredChunks
-		.map(encounteredChunk =>
-		{
-			return {
-				identifier: encounteredChunk.identifier,
-				games: Array.from(encounteredChunk.games.values()).map(game => game.title + " (" + game.platform + ")"),
-				filePaths: Array.from(encounteredChunk.filePaths.values()),
-			};
-		});
-
-	const json = JSON.stringify(encounteredChunks2, null, "\t");
+	const json = JSON.stringify(encounteredChunksReport, null, "\t");
 
 	await fs.promises.writeFile(path.join("D:", "Desktop", "encountered-chunks.json"), json,
 		{
 			encoding: "utf-8",
 		});
 }
+
+//
+// Script
+//
+
+const games : Game[] =
+	[
+		new Game(
+			{
+				title: "Dark Summit",
+				platform: "GameCube",
+				directoryPath: "F:\\Pure3D Games\\Dark Summit [GameCube]",
+			}),
+
+		new Game(
+			{
+				title: "The Simpsons Road Rage",
+				platform: "Xbox",
+				directoryPath: "F:\\Pure3D Games\\The Simpsons Road Rage [Xbox]",
+			}),
+
+		// TODO: Tetris Worlds
+
+		// TODO: Monsters, Inc. Scream Arena
+
+		// TODO: James Cameron's Dark Angel
+
+		// TODO: CSI: Crime Scene Investigation
+
+		// TODO: Hulk
+
+		new Game(
+			{
+				title: "The Simpsons Hit & Run",
+				platform: "PC",
+				directoryPath: "F:\\Pure3D Games\\The Simpsons Hit & Run [PC]",
+			}),
+
+		// TODO: CSI: Dark Motives
+
+		// TODO: CSI: Miami
+
+		// TODO: The Incredible Hulk: Ultimate Destruction
+
+		// TODO: Crash Tag Team Racing
+
+		// TODO: Scarface: The World Is Yours
+
+		// TODO: Crash of the Titans
+
+		// TODO: Crash Mind Over Mutant
+
+		new Game(
+			{
+				title: "Prototype",
+				platform: "PC",
+				directoryPath: "F:\\Pure3D Games\\Prototype [PC]",
+			}),
+
+		new Game(
+			{
+				title: "Prototype 2",
+				platform: "PC",
+				directoryPath: "F:\\Pure3D Games\\Prototype 2 [PC]",
+			}),
+	];
+
+const encounteredChunksReport = await scanGames(games);
+
+await writeHtmlReport(encounteredChunksReport);
+
+await writeJsonReport(encounteredChunksReport);

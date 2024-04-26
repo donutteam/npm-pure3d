@@ -15,6 +15,8 @@ import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
 import { ExportInfoChunk } from "../classes/chunks/ExportInfoChunk.js";
 import { ExportInfoNamedIntegerChunk } from "../classes/chunks/ExportInfoNamedIntegerChunk.js";
 import { ExportInfoNamedStringChunk } from "../classes/chunks/ExportInfoNamedStringChunk.js";
+import { Fence2Chunk } from "../classes/chunks/Fence2Chunk.js";
+import { FenceChunk } from "../classes/chunks/FenceChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
@@ -65,6 +67,10 @@ defaultChunkRegistry.register(Chunk.identifiers.EXPORT_INFO, ExportInfoChunk);
 defaultChunkRegistry.register(Chunk.identifiers.EXPORT_INFO_NAMED_INTEGER, ExportInfoNamedIntegerChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.EXPORT_INFO_NAMED_STRING, ExportInfoNamedStringChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.FENCE, FenceChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.FENCE_2, Fence2Chunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.HISTORY, HistoryChunk);
 

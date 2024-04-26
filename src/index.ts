@@ -15,6 +15,8 @@ export * from "./classes/chunks/EntityChannelChunk.js";
 export * from "./classes/chunks/ExportInfoChunk.js";
 export * from "./classes/chunks/ExportInfoNamedIntegerChunk.js";
 export * from "./classes/chunks/ExportInfoNamedStringChunk.js";
+export * from "./classes/chunks/Fence2Chunk.js";
+export * from "./classes/chunks/FenceChunk.js";
 export * from "./classes/chunks/HistoryChunk.js";
 export * from "./classes/chunks/ImageChunk.js";
 export * from "./classes/chunks/ImageDataChunk.js";

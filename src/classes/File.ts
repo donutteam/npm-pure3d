@@ -145,7 +145,16 @@ export class File
 		// Add Export Info Chunk (if requested)
 		//
 
-		const addExportInfo = options.addExportInfo ?? true;
+		let addExportInfo : boolean;
+
+		if ("chunks" in options)
+		{
+			addExportInfo = options.addExportInfo ?? false;
+		}
+		else
+		{
+			addExportInfo = options.addExportInfo ?? options.rootChunk.isNewFile;
+		}
 
 		if (addExportInfo)
 		{

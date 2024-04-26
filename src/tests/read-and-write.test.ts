@@ -43,8 +43,7 @@ await test.it("Read and write an existing Pure3D file",
 
 		const newFileBuffer = Pure3D.File.toArrayBuffer(
 			{
-				addExportInfo: true,
-				chunks: rootChunk.children,
+				rootChunk,
 			});
 
 		//

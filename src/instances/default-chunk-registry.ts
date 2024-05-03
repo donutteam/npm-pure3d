@@ -11,6 +11,14 @@ import { BoundingSphereChunk } from "../classes/chunks/BoundingSphereChunk.js";
 import { ChannelInterpolationModeChunk } from "../classes/chunks/ChannelInterpolationModeChunk.js";
 import { Chunk } from "../classes/chunks/Chunk.js";
 import { ColourListChunk } from "../classes/chunks/ColourListChunk.js";
+import { CompositeDrawableChunk } from "../classes/chunks/CompositeDrawableChunk.js";
+import { CompositeDrawableEffectChunk } from "../classes/chunks/CompositeDrawableEffectChunk.js";
+import { CompositeDrawableEffectListChunk } from "../classes/chunks/CompositeDrawableEffectListChunk.js";
+import { CompositeDrawablePropChunk } from "../classes/chunks/CompositeDrawablePropChunk.js";
+import { CompositeDrawablePropListChunk } from "../classes/chunks/CompositeDrawablePropListChunk.js";
+import { CompositeDrawableSkinChunk } from "../classes/chunks/CompositeDrawableSkinChunk.js";
+import { CompositeDrawableSkinListChunk } from "../classes/chunks/CompositeDrawableSkinListChunk.js";
+import { CompositeDrawableSortOrderChunk } from "../classes/chunks/CompositeDrawableSortOrderChunk.js";
 import { EntityChannelChunk } from "../classes/chunks/EntityChannelChunk.js";
 import { ExportInfoChunk } from "../classes/chunks/ExportInfoChunk.js";
 import { ExportInfoNamedIntegerChunk } from "../classes/chunks/ExportInfoNamedIntegerChunk.js";
@@ -63,6 +71,22 @@ defaultChunkRegistry.register(Chunk.identifiers.BOUNDING_SPHERE, BoundingSphereC
 defaultChunkRegistry.register(Chunk.identifiers.CHANNEL_INTERPOLATION_MODE, ChannelInterpolationModeChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.COLOUR_LIST, ColourListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE, CompositeDrawableChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_EFFECT, CompositeDrawableEffectChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_EFFECT_LIST, CompositeDrawableEffectListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_PROP, CompositeDrawablePropChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_PROP_LIST, CompositeDrawablePropListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_SKIN, CompositeDrawableSkinChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_SKIN_LIST, CompositeDrawableSkinListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.COMPOSITE_DRAWABLE_SORT_ORDER, CompositeDrawableSortOrderChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.ENTITY_CHANNEL, EntityChannelChunk);
 

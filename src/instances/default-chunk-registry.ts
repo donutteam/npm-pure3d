@@ -20,8 +20,10 @@ import { FenceChunk } from "../classes/chunks/FenceChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
+import { MatrixListChunk } from "../classes/chunks/MatrixListChunk.js";
 import { NormalListChunk } from "../classes/chunks/NormalListChunk.js";
 import { OldPrimitiveGroupChunk } from "../classes/chunks/OldPrimitiveGroupChunk.js";
+import { PackedNormalListChunk } from "../classes/chunks/PackedNormalListChunk.js";
 import { PositionListChunk } from "../classes/chunks/PositionListChunk.js";
 import { ShaderChunk } from "../classes/chunks/ShaderChunk.js";
 import { ShaderColourParameterChunk } from "../classes/chunks/ShaderColourParameterChunk.js";
@@ -35,6 +37,8 @@ import { SkeletonJointMirrorMapChunk } from "../classes/chunks/SkeletonJointMirr
 import { SkinChunk } from "../classes/chunks/SkinChunk.js";
 import { SpriteChunk } from "../classes/chunks/SpriteChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
+import { UVListChunk } from "../classes/chunks/UVListChunk.js";
+import { WeightListChunk } from "../classes/chunks/WeightListChunk.js";
 
 import { ChunkRegistry } from "../classes/ChunkRegistry.js";
 
@@ -78,9 +82,13 @@ defaultChunkRegistry.register(Chunk.identifiers.IMAGE, ImageChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
 
+defaultChunkRegistry.register(Chunk.identifiers.MATRIX_LIST, MatrixListChunk);
+
 defaultChunkRegistry.register(Chunk.identifiers.NORMAL_LIST, NormalListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.OLD_PRIMITIVE_GROUP, OldPrimitiveGroupChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.PACKED_NORMAL_LIST, PackedNormalListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.POSITION_LIST, PositionListChunk);
 
@@ -107,3 +115,7 @@ defaultChunkRegistry.register(Chunk.identifiers.SKIN, SkinChunk);
 defaultChunkRegistry.register(Chunk.identifiers.SPRITE, SpriteChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.TEXTURE, TextureChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.UV_LIST, UVListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.WEIGHT_LIST, WeightListChunk);

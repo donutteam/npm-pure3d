@@ -1,10 +1,17 @@
 # Changelog
+## 1.2.0
+
+* Added `MatrixListChunk` class.
+* Added `PackedNormalListChunk` class.
+* Added `UVListChunk` class.
+* Added `WeightListChunk` class.
+* Updated the `defaultChunkRegistry` instance with the new classes.
+
 ## 1.1.0
 
 * Added `FenceChunk` class.
-	* Also added this class to the `defaultChunkRegistry` for 0x3000007 chunks.
 * Added `Fence2Chunk` class.
-	* Also added this class to the `defaultChunkRegistry` for 0x3000000 chunks.
+* Updated the `defaultChunkRegistry` instance with the new classes.
 
 ## 1.0.0
 Initial release.

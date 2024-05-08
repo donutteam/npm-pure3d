@@ -29,9 +29,16 @@ import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
 import { MatrixListChunk } from "../classes/chunks/MatrixListChunk.js";
+import { MeshChunk } from "../classes/chunks/MeshChunk.js";
+import { MultiControllerChunk } from "../classes/chunks/MultiControllerChunk.js";
+import { MultiControllerTracksChunk } from "../classes/chunks/MultiControllerTracksChunk.js";
 import { NormalListChunk } from "../classes/chunks/NormalListChunk.js";
+import { OldBillboardQuadGroupChunk } from "../classes/chunks/OldBillboardQuadGroupChunk.js";
+import { OldFrameControllerChunk } from "../classes/chunks/OldFrameControllerChunk.js";
 import { OldPrimitiveGroupChunk } from "../classes/chunks/OldPrimitiveGroupChunk.js";
 import { PackedNormalListChunk } from "../classes/chunks/PackedNormalListChunk.js";
+import { ParticleSystem2Chunk } from "../classes/chunks/ParticleSystem2Chunk.js";
+import { ParticleSystemFactoryChunk } from "../classes/chunks/ParticleSystemFactoryChunk.js";
 import { PositionListChunk } from "../classes/chunks/PositionListChunk.js";
 import { ShaderChunk } from "../classes/chunks/ShaderChunk.js";
 import { ShaderColourParameterChunk } from "../classes/chunks/ShaderColourParameterChunk.js";
@@ -108,11 +115,25 @@ defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.MATRIX_LIST, MatrixListChunk);
 
+defaultChunkRegistry.register(Chunk.identifiers.MESH, MeshChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.MULTI_CONTROLLER, MultiControllerChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.MULTI_CONTROLLER_TRACKS, MultiControllerTracksChunk);
+
 defaultChunkRegistry.register(Chunk.identifiers.NORMAL_LIST, NormalListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.OLD_BILLBOARD_QUAD_GROUP, OldBillboardQuadGroupChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.OLD_FRAME_CONTROLLER, OldFrameControllerChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.OLD_PRIMITIVE_GROUP, OldPrimitiveGroupChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.PACKED_NORMAL_LIST, PackedNormalListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.PARTICLE_SYSTEM_2, ParticleSystem2Chunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.PARTICLE_SYSTEM_FACTORY, ParticleSystemFactoryChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.POSITION_LIST, PositionListChunk);
 

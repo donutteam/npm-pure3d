@@ -1,4 +1,15 @@
 # Changelog
+## 1.3.0
+
+* Added `MeshChunk` class.
+* Added `MultiControllerChunk` class.
+* Added `MultiControllerTracksChunk` class.
+* Added `OldBillboardQuadGroupChunk` class.
+* Added `OldFrameControllerChunk` class.
+* Added `ParticleSystem2Chunk` class.
+* Added `ParticleSystemFactoryChunk` class.
+* Updated the `defaultChunkRegistry` instance with the new classes.
+
 ## 1.2.0
 
 * Added `MatrixListChunk` class.

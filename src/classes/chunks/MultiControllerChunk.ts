@@ -84,8 +84,6 @@ export class MultiControllerChunk extends Chunk implements MultiControllerChunkO
 			}
 		}
 
-		console.log("Number of tracks: " + numberOfTracks);
-
 		return numberOfTracks;
 	}
 

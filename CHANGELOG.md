@@ -1,4 +1,7 @@
 # Changelog
+## 1.3.1
+Fixed a mistake in the `MultiControllerChunk` class where the name and version were written in the wrong order.
+
 ## 1.3.0
 
 * Added `MeshChunk` class.

@@ -46,9 +46,9 @@ export class MultiControllerChunk extends Chunk implements MultiControllerChunkO
 		};
 	}
 
-	version : number;
-
 	name : string;
+
+	version : number;
 
 	length : number;
 
@@ -63,9 +63,9 @@ export class MultiControllerChunk extends Chunk implements MultiControllerChunkO
 				identifier: Chunk.identifiers.MULTI_CONTROLLER,
 			});
 
-		this.version = options.version;
-
 		this.name = options.name;
+
+		this.version = options.version;
 
 		this.length = options.length;
 
@@ -84,14 +84,16 @@ export class MultiControllerChunk extends Chunk implements MultiControllerChunkO
 			}
 		}
 
+		console.log("Number of tracks: " + numberOfTracks);
+
 		return numberOfTracks;
 	}
 
 	override writeData(binaryWriter : Pure3DBinaryWriter) : void
 	{
-		binaryWriter.writeUInt32(this.version);
-
 		binaryWriter.writePure3DString(this.name);
+
+		binaryWriter.writeUInt32(this.version);
 
 		binaryWriter.writeFloat32(this.length);
 

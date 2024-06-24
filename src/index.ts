@@ -51,6 +51,7 @@ export * from "./classes/chunks/SkeletonJointChunk.js";
 export * from "./classes/chunks/SkeletonJointMirrorMapChunk.js";
 export * from "./classes/chunks/SkinChunk.js";
 export * from "./classes/chunks/SpriteChunk.js";
+export * from "./classes/chunks/StaticEntityChunk.js";
 export * from "./classes/chunks/TextureChunk.js";
 export * from "./classes/chunks/UnknownChunk.js";
 export * from "./classes/chunks/UVListChunk.js";

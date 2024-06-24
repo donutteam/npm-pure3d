@@ -1,4 +1,8 @@
 # Changelog
+## 1.4.0
+
+* Added `StaticEntityChunk` class.
+
 ## 1.3.2
 Removing a test log.
 

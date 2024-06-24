@@ -51,6 +51,7 @@ import { SkeletonJointChunk } from "../classes/chunks/SkeletonJointChunk.js";
 import { SkeletonJointMirrorMapChunk } from "../classes/chunks/SkeletonJointMirrorMapChunk.js";
 import { SkinChunk } from "../classes/chunks/SkinChunk.js";
 import { SpriteChunk } from "../classes/chunks/SpriteChunk.js";
+import { StaticEntityChunk } from "../classes/chunks/StaticEntityChunk.js";
 import { TextureChunk } from "../classes/chunks/TextureChunk.js";
 import { UVListChunk } from "../classes/chunks/UVListChunk.js";
 import { WeightListChunk } from "../classes/chunks/WeightListChunk.js";
@@ -158,6 +159,8 @@ defaultChunkRegistry.register(Chunk.identifiers.SKELETON_JOINT_MIRROR_MAP, Skele
 defaultChunkRegistry.register(Chunk.identifiers.SKIN, SkinChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.SPRITE, SpriteChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.STATIC_ENTITY, StaticEntityChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.TEXTURE, TextureChunk);
 

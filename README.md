@@ -105,7 +105,7 @@ export class ExampleChunk extends Pure3D.Chunk implements ExampleChunkOptions
 {
 	static parseData(options : Pure3D.ChunkParseDataOptions) : ExampleChunkOptions
 	{
-		const binaryReader = new Pure3D.Pure3DBinaryReader();
+		const binaryReader = new Pure3D.Pure3DBinaryReader(options.arrayBuffer, options.isLittleEndian);
 
 		const value1 = binaryReader.readUInt32();
 

@@ -16,20 +16,25 @@ export class ChunkRegistryOptions
 
 export class ChunkRegistry
 {
+	chunkClasses : Record<number, typeof Chunk> = {};
+
+	/** @deprecated */
 	chunkClass : Record<number, typeof Chunk> = {};
 
 	constructor(options : ChunkRegistryOptions = {})
 	{
-		this.chunkClass = options.chunkRegistry?.chunkClass ?? {};
+		this.chunkClasses = options.chunkRegistry?.chunkClasses ?? {};
+
+		this.chunkClass = this.chunkClasses;
 	}
 
 	getClass(chunkIdentifier : number) : typeof Chunk
 	{
-		return this.chunkClass[chunkIdentifier] ?? UnknownChunk;
+		return this.chunkClasses[chunkIdentifier] ?? UnknownChunk;
 	}
 
 	register(chunkIdentifier : number, chunkClass : new (...args : any[]) => Chunk)
 	{
-		this.chunkClass[chunkIdentifier] = chunkClass as typeof Chunk;
+		this.chunkClasses[chunkIdentifier] = chunkClass as typeof Chunk;
 	}
 }

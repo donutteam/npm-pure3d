@@ -9,6 +9,8 @@
 * Added `RoadDataSegmentChunk` class.
 * Added `RoadSegmentChunk` class.
 * Updated the `defaultChunkRegistry` instance with the new classes.
+* Renamed `ChunkRegistry.chunkClass` to `chunkClasses`.
+	* The only name is now marked as deprecated.
 
 ## 1.4.0
 

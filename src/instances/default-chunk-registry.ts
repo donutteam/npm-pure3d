@@ -28,6 +28,7 @@ import { FenceChunk } from "../classes/chunks/FenceChunk.js";
 import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
+import { IntersectionChunk  } from "../classes/chunks/IntersectionChunk.js";
 import { MatrixListChunk } from "../classes/chunks/MatrixListChunk.js";
 import { MeshChunk } from "../classes/chunks/MeshChunk.js";
 import { MultiControllerChunk } from "../classes/chunks/MultiControllerChunk.js";
@@ -40,6 +41,9 @@ import { PackedNormalListChunk } from "../classes/chunks/PackedNormalListChunk.j
 import { ParticleSystem2Chunk } from "../classes/chunks/ParticleSystem2Chunk.js";
 import { ParticleSystemFactoryChunk } from "../classes/chunks/ParticleSystemFactoryChunk.js";
 import { PositionListChunk } from "../classes/chunks/PositionListChunk.js";
+import { RoadChunk } from "../classes/chunks/RoadChunk.js";
+import { RoadDataSegmentChunk } from "../classes/chunks/RoadDataSegmentChunk.js";
+import { RoadSegmentChunk  } from "../classes/chunks/RoadSegmentChunk.js";
 import { ShaderChunk } from "../classes/chunks/ShaderChunk.js";
 import { ShaderColourParameterChunk } from "../classes/chunks/ShaderColourParameterChunk.js";
 import { ShaderFloatParameterChunk } from "../classes/chunks/ShaderFloatParameterChunk.js";
@@ -114,6 +118,8 @@ defaultChunkRegistry.register(Chunk.identifiers.IMAGE, ImageChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
 
+defaultChunkRegistry.register(Chunk.identifiers.INTERSECTION, IntersectionChunk);
+
 defaultChunkRegistry.register(Chunk.identifiers.MATRIX_LIST, MatrixListChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.MESH, MeshChunk);
@@ -137,6 +143,12 @@ defaultChunkRegistry.register(Chunk.identifiers.PARTICLE_SYSTEM_2, ParticleSyste
 defaultChunkRegistry.register(Chunk.identifiers.PARTICLE_SYSTEM_FACTORY, ParticleSystemFactoryChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.POSITION_LIST, PositionListChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.ROAD, RoadChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.ROAD_DATA_SEGMENT, RoadDataSegmentChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.ROAD_SEGMENT, RoadSegmentChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.SHADER, ShaderChunk);
 

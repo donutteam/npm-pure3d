@@ -4,6 +4,11 @@
 * Added an explicit return type to `Chunk.write`.
 * Renamed `File.signatures.COMPRESSED` to `LITTLE_ENDIAN_COMPRESSED`.
 * Added `File.signatures.BIG_ENDIAN_COMPRESSED`.
+* Added `IntersectionChunk` class.
+* Added `RoadChunk` class.
+* Added `RoadDataSegmentChunk` class.
+* Added `RoadSegmentChunk` class.
+* Updated the `defaultChunkRegistry` instance with the new classes.
 
 ## 1.4.0
 

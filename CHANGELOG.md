@@ -11,6 +11,7 @@
 * Updated the `defaultChunkRegistry` instance with the new classes.
 * Renamed `ChunkRegistry.chunkClass` to `chunkClasses`.
 	* The only name is now marked as deprecated.
+* Now exports `version` constant.
 
 ## 1.4.0
 

@@ -72,8 +72,13 @@ export class File
 		{
 			LITTLE_ENDIAN: 0xFF443350, // P3Dÿ
 
+			LITTLE_ENDIAN_COMPRESSED: 0x5A443350, // P3DZ
+
 			BIG_ENDIAN: 0x503344FF, // ÿD3P
 
+			BIG_ENDIAN_COMPRESSED: 0x5033445A, // ZD3P
+
+			/** @deprecated Use LITTLE_ENDIAN_COMPRESSED instead. */
 			COMPRESSED: 0x5A443350, // P3DZ
 		};
 
@@ -93,7 +98,8 @@ export class File
 		// Decompress File (if needed)
 		//
 
-		if (fileIdentifier == File.signatures.COMPRESSED)
+		// TODO: Handle big-endian compressed files.
+		if (fileIdentifier == File.signatures.LITTLE_ENDIAN_COMPRESSED)
 		{
 			binaryReader.seek(0);
 

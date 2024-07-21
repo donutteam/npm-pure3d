@@ -2,6 +2,8 @@
 ## 1.5.0
 
 * Added an explicit return type to `Chunk.write`.
+* Renamed `File.signatures.COMPRESSED` to `LITTLE_ENDIAN_COMPRESSED`.
+* Added `File.signatures.BIG_ENDIAN_COMPRESSED`.
 
 ## 1.4.0
 

@@ -1,4 +1,8 @@
 # Changelog
+## 1.5.0
+
+* Added an explicit return type to `Chunk.write`.
+
 ## 1.4.0
 
 * Added `StaticEntityChunk` class.

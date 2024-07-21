@@ -256,7 +256,7 @@ export class Chunk
 		return 12 + this.getDataSize() + this.getChildrenSize();
 	}
 
-	write(binaryWriter : Pure3DBinaryWriter)
+	write(binaryWriter : Pure3DBinaryWriter) : void
 	{
 		binaryWriter.writeUInt32(this.identifier);
 

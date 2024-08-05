@@ -28,6 +28,7 @@ export * from "./classes/chunks/FenceChunk.js";
 export * from "./classes/chunks/HistoryChunk.js";
 export * from "./classes/chunks/ImageChunk.js";
 export * from "./classes/chunks/ImageDataChunk.js";
+export * from "./classes/chunks/LocatorChunk.js";
 export * from "./classes/chunks/MatrixListChunk.js";
 export * from "./classes/chunks/MeshChunk.js";
 export * from "./classes/chunks/MultiControllerChunk.js";
@@ -56,6 +57,10 @@ export * from "./classes/chunks/TextureChunk.js";
 export * from "./classes/chunks/UnknownChunk.js";
 export * from "./classes/chunks/UVListChunk.js";
 export * from "./classes/chunks/WeightListChunk.js";
+
+export * from "./classes/locator-data/EventLocatorChunkData.js";
+export * from "./classes/locator-data/GenericLocatorChunkData.js";
+export * from "./classes/locator-data/LocatorChunkData.js";
 
 export * from "./classes/ChunkRegistry.js";
 export * from "./classes/Colour.js";

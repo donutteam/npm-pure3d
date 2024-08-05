@@ -29,6 +29,7 @@ import { HistoryChunk } from "../classes/chunks/HistoryChunk.js";
 import { ImageChunk } from "../classes/chunks/ImageChunk.js";
 import { ImageDataChunk } from "../classes/chunks/ImageDataChunk.js";
 import { IntersectionChunk  } from "../classes/chunks/IntersectionChunk.js";
+import { LocatorChunk } from "../classes/chunks/LocatorChunk.js";
 import { MatrixListChunk } from "../classes/chunks/MatrixListChunk.js";
 import { MeshChunk } from "../classes/chunks/MeshChunk.js";
 import { MultiControllerChunk } from "../classes/chunks/MultiControllerChunk.js";
@@ -119,6 +120,8 @@ defaultChunkRegistry.register(Chunk.identifiers.IMAGE, ImageChunk);
 defaultChunkRegistry.register(Chunk.identifiers.IMAGE_DATA, ImageDataChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.INTERSECTION, IntersectionChunk);
+
+defaultChunkRegistry.register(Chunk.identifiers.LOCATOR, LocatorChunk);
 
 defaultChunkRegistry.register(Chunk.identifiers.MATRIX_LIST, MatrixListChunk);
 
